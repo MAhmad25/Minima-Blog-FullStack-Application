@@ -1,1 +1,20 @@
 @import "tailwindcss";
+@font-face {
+      font-family: Aeonic;
+      src: url(/fonts/aeonic.woff2);
+}
+@font-face {
+      font-family: Editorial;
+      src: url(/fonts/editorial.woff2);
+}
+@font-face {
+      font-family: Emirtus;
+      src: url(/fonts/emirtus.woff2);
+}
+@theme {
+      --color-wht: oklch(0.98 0.005 85);
+      --color-bl: oklch(0.25 0.01 85);
+      --font-primary-text: Aeonic;
+      --font-secondary-text: Editorial;
+      --font-feeling-logo: Emirtus;
+}
