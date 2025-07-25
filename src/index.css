@@ -11,10 +11,25 @@
       font-family: Emirtus;
       src: url(/fonts/emirtus.woff2);
 }
+@font-face {
+      font-family: Alliance;
+      src: url(/fonts/alliance.woff2);
+}
+@font-face {
+      font-family: cool;
+      src: url(/fonts/cool.otf);
+}
+@font-face {
+      font-family: ppneue;
+      src: url(/fonts/ppneue.woff2);
+}
 @theme {
       --color-wht: oklch(0.98 0.005 85);
       --color-bl: oklch(0.25 0.01 85);
       --font-primary-text: Aeonic;
       --font-secondary-text: Editorial;
       --font-feeling-logo: Emirtus;
+      --font-alliance: Alliance;
+      --font-ppneue: ppneue;
+      --font-cool: cool;
 }
