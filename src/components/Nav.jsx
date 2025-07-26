@@ -3,7 +3,7 @@ import { LuSquarePen } from "react-icons/lu";
 import { HiOutlineMenu } from "react-icons/hi";
 const Nav = () => {
       return (
-            <nav className="max-w-full sticky top-0 left-0 flex  backdrop-blur-3xl shadow-wht justify-between md:items-center text-[var(--color-bl)]  font-primary-text h-20 md:h-20">
+            <nav className="max-w-full sticky top-0 left-0 flex z-20 backdrop-blur-3xl shadow-wht justify-between md:items-center text-[var(--color-bl)]  font-primary-text h-20 md:h-20">
                   {/* Logo Section */}
                   <section className="flex w-fit  md:w-1/4  items-center">
                         <svg className="scale-[0.4]" width="90" height="90" viewBox="0 0 106 108" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -24,7 +24,7 @@
       src: url(/fonts/ppneue.woff2);
 }
 @theme {
-      --color-wht: oklch(0.98 0.005 85);
+      --color-wht: #FDF9EF;
       --color-bl: oklch(0.25 0.01 85);
       --font-primary-text: Aeonic;
       --font-secondary-text: Editorial;
@@ -33,3 +33,14 @@
       --font-ppneue: ppneue;
       --font-cool: cool;
 }
+/* 
+ oklch(0.98 0.005 85);
+Seashell - FFF5EE
+
+⚪️ White Heat - FDF9EF
+
+⚪️ Spatial White - DEDDDB
+
+⚪️ Antique white - FAEBD7
+
+⚪️ Pacific Pearl - E8EAE6 */

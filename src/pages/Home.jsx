@@ -1,22 +1,27 @@
 import { Link } from "react-router-dom";
+import { FaArrowTrendUp } from "react-icons/fa6";
+import { GoPeople } from "react-icons/go";
+import { PiBookOpen } from "react-icons/pi";
+import Post from "../components/Post";
+import { BsArrowRightShort } from "react-icons/bs";
 
 const Home = () => {
       return (
-            <section className="w-full min-h-svh px-5 font-primary-text sm:px-0 text-[var(--color-bl)] bg-[var(--color-wht)]  flex flex-col pt-34  gap-14  items-center">
+            <section className="w-full min-h-svh px-5 font-primary-text  text-[var(--color-bl)] bg-[var(--color-wht)]  flex flex-col pt-34  gap-14  items-center">
                   <p className="border-[1px] font-alliance w-fit px-3 py-1 text-xs sm:text-sm rounded-full">✨ Welcome to the future of blogging</p>
                   <h1 className="font-cool text-center sm:w-1/2   font-black text-5xl sm:text-7xl tracking-tight ">Thoughts, stories and ideas.</h1>
                   <p className="font-ppneue  text-center sm:w-1/2    text-xl sm:text-2xl ">A minimalist blog platform for the modern web, where ideas meet elegant design and creativity knows no bounds.</p>
                   {/* Button */}
                   <div className="flex gap-4">
-                        <Link className="sm:px-4 p-3 text-sm sm:text-lg sm:py-2 rounded-xl bg-[var(--color-bl)] text-[var(--color-wht)]" to="/signup">
+                        <Link className="sm:px-4 p-3 text-sm sm:text-lg sm:py-2 rounded-xl bg-[var(--color-bl)] text-[var(--color-wht)]" to="/create-account">
                               Start writing today
                         </Link>
                         <Link className="sm:px-4 p-3 text-sm sm:text-lg sm:py-2 rounded-xl border-[1px] bg-transparent" to="/journals">
                               Explore stories
                         </Link>
                   </div>
-                  {/* State Info */}
-                  <div className="flex w-full border-b-[1px] border-[var(--color-bl)]/40  gap-2 justify-center  flex-wrap sm:gap-5 py-10">
+                  {/* Special Things */}
+                  <div className="flex w-full  gap-2 justify-center  flex-wrap sm:gap-5  py-10">
                         {[
                               { color: "bg-green-600", text: "Free to Join" },
                               { color: "bg-blue-600", text: "No Ads" },
@@ -28,7 +33,40 @@ const Home = () => {
                               </div>
                         ))}
                   </div>
-                  <div className="w-full px-10"></div>
+                  {/* State Info */}
+                  <div className="w-full flex justify-center-safe flex-wrap gap-16 items-center border-y-[1px]  border-[var(--color-bl)]/40 px-10  py-10">
+                        {[
+                              { icon: FaArrowTrendUp, bold: "50K+", para: "Monthly Readers" },
+                              { icon: GoPeople, bold: "1,200+", para: "Active Writers" },
+                              { icon: PiBookOpen, bold: "15K+", para: "Published Stories" },
+                        ].map((obj, index) => (
+                              <div key={index} className="flex flex-col gap-3 items-center">
+                                    <span className="border-[1px] rounded-full p-5">
+                                          <obj.icon size="1.3rem" />
+                                    </span>
+                                    <h2 className="text-2xl ">{obj.bold}</h2>
+                                    <p>{obj.para}</p>
+                              </div>
+                        ))}
+                  </div>
+                  <div className="w-full py-20 space-y-16 min-h-screen">
+                        <div className="w-full flex flex-col items-center justify-center  gap-5">
+                              <h1 className=" text-5xl font-cool text-center font-black sm:text-7xl">Featured Stories</h1>
+                              <p className="text-center text-sm sm:text-lg sm:w-[40%] leading-none">Discover the most compelling articles and insights from our community of writers</p>
+                        </div>
+                        {/* Cards */}
+                        <div className="w-full grid gap-5 grid-cols-1 md:grid-cols-3">
+                              <Post />
+                              <Post />
+                              <Post />
+                        </div>
+                        <div className="w-full flex flex-col justify-center items-center h-fit">
+                              <Link className="sm:px-4 justify-center items-center flex gap-2 p-3 text-lg sm:py-2 rounded-xl border-[1px] bg-transparent" to="/journals">
+                                    <p>View all stories</p>
+                                    <BsArrowRightShort />
+                              </Link>
+                        </div>
+                  </div>
             </section>
       );
 };
