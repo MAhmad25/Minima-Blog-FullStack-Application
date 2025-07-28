@@ -10,7 +10,7 @@ const Home = () => {
             <section className="w-full min-h-svh px-5 font-primary-text  text-[var(--color-bl)] bg-[var(--color-wht)]  flex flex-col pt-34  gap-14  items-center">
                   <p className="border-[1px] font-alliance w-fit px-3 py-1 text-xs sm:text-sm rounded-full">✨ Welcome to the future of blogging</p>
                   <h1 className="font-cool text-center sm:w-1/2   font-black text-5xl sm:text-7xl tracking-tight ">Thoughts, stories and ideas.</h1>
-                  <p className="font-ppneue  text-center sm:w-1/2    text-xl sm:text-2xl ">A minimalist blog platform for the modern web, where ideas meet elegant design and creativity knows no bounds.</p>
+                  <p className="font-ppneue  text-center sm:w-1/2 text-xl sm:text-2xl ">A minimalist blog platform for the modern web, where ideas meet elegant design and creativity knows no bounds.</p>
                   {/* Button */}
                   <div className="flex gap-4">
                         <Link className="sm:px-4 p-3 text-sm sm:text-lg sm:py-2 rounded-xl bg-[var(--color-bl)] text-[var(--color-wht)]" to="/create-account">
@@ -55,11 +55,11 @@ const Home = () => {
                               <p className="text-center text-sm sm:text-lg sm:w-[40%] leading-none">Discover the most compelling articles and insights from our community of writers</p>
                         </div>
                         {/* Cards */}
-                        <div className="w-full grid gap-5 grid-cols-1 md:grid-cols-3">
+                        <section className="w-full grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                               <Post />
                               <Post />
                               <Post />
-                        </div>
+                        </section>
                         <div className="w-full flex flex-col justify-center items-center h-fit">
                               <Link className="sm:px-4 justify-center items-center flex gap-2 p-3 text-lg sm:py-2 rounded-xl border-[1px] bg-transparent" to="/journals">
                                     <p>View all stories</p>
