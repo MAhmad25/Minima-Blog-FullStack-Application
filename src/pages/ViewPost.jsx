@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import Post from "../components/Post";
+import { Post } from "../components/index";
 
 const ViewPost = () => {
       return (

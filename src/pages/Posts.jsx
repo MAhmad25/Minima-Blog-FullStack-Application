@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import Post from "../components/Post";
-
+import { Post } from "../components/index";
 const Posts = () => {
       return (
             <section className="w-full space-y-16 px-5 min-h-screen py-10 font-primary-text  text-[var(--color-bl)] bg-[var(--color-wht)]">

@@ -2,7 +2,9 @@ import { Link } from "react-router-dom";
 import { LuSquarePen } from "react-icons/lu";
 import { HiOutlineMenu } from "react-icons/hi";
 import Logout from "./Button/Logout";
+import { useSelector } from "react-redux";
 const Nav = () => {
+      const status = useSelector((state) => state.auth.status);
       return (
             <nav className="max-w-full sticky top-0 left-0 flex z-20 backdrop-blur-3xl shadow-wht justify-between md:items-center text-[var(--color-bl)]  font-primary-text h-20 md:h-20">
                   {/* Logo Section */}
@@ -29,7 +31,7 @@ const Nav = () => {
                               <div className="flex text-lg  items-center gap-5">
                                     <Link to="/login">Login</Link>
                                     <Link to="/create-account ">Create Account</Link>
-                                    <Logout />
+                                    {status && <Logout />}
                               </div>
                         </section>
                   </section>

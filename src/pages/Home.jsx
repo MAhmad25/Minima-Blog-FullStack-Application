@@ -2,9 +2,8 @@ import { Link } from "react-router-dom";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { GoPeople } from "react-icons/go";
 import { PiBookOpen } from "react-icons/pi";
-import Post from "../components/Post";
+import { Post } from "../components/index.js";
 import { BsArrowRightShort } from "react-icons/bs";
-
 const Home = () => {
       return (
             <section className="w-full min-h-svh px-5 font-primary-text  text-[var(--color-bl)] bg-[var(--color-wht)]  flex flex-col pt-34  gap-14  items-center">
