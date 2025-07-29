@@ -1,5 +1,5 @@
 import LocomotiveScroll from "locomotive-scroll";
-import Container from "./components/container/container";
+import { Container } from "./components/index";
 import AppRoute from "./Routes/AppRoute";
 const App = () => {
       // function onScroll({ scroll, limit, velocity, direction, progress }) {

@@ -1,13 +1,7 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import Login from "../pages/Login";
-import Signup from "../pages/Signup";
-import Home from "../pages/Home";
-import { Nav } from "../components/index";
-import { Footer } from "../components/index";
-import Posts from "../pages/Posts";
-import ViewPost from "../pages/ViewPost";
+import { Login, Signup, Home, Posts, WritePost, ViewPost } from "../pages/index";
+import { Nav, Footer } from "../components/index";
 import { useLayoutEffect } from "react";
-import WritePost from "../pages/WritePost";
 
 const AppRoute = () => {
       const { pathname } = useLocation();

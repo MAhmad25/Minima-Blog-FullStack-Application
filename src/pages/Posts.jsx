@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
-import { Post } from "../components/index";
+import { Post, Input } from "../components/index";
+import { useRef } from "react";
 const Posts = () => {
+      const searchPost = useRef(null);
       return (
             <section className="w-full space-y-16 px-5 min-h-screen py-10 font-primary-text  text-[var(--color-bl)] bg-[var(--color-wht)]">
                   <div className=" flex justify-center items-center flex-col gap-10  w-full">
@@ -16,10 +18,7 @@ const Posts = () => {
                                     </Link>
                               ))}
                         </div>
-                        <div>
-                              <label htmlFor="Search"></label>
-                              <input id="Search" className="px-4 w-full py-2 block border-[1px] rounded-xl outline-none " type="text" placeholder="Search for post" />
-                        </div>
+                        <Input type={"text"} placeholder={"Search post"} ref={searchPost} />
                   </div>
                   {/* All Posts */}
                   <section className="w-full grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">

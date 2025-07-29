@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { LuSquarePen } from "react-icons/lu";
 import { HiOutlineMenu } from "react-icons/hi";
-import Logout from "./Button/Logout";
+import { Logout } from "./index";
 import { useSelector } from "react-redux";
 const Nav = () => {
       const status = useSelector((state) => state.auth.status);
