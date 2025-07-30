@@ -6,7 +6,6 @@ import appAuth from "../app/AuthService";
 import { useDispatch } from "react-redux";
 import { login } from "../store/reducers/authSlice";
 import { useState } from "react";
-
 const Signup = () => {
       const dispatch = useDispatch();
       const navigate = useNavigate();

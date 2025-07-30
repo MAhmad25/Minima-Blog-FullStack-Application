@@ -1,16 +1,24 @@
 import { useDispatch } from "react-redux";
 import appAuth from "../../app/AuthService";
 import { logout } from "../../store/reducers/authSlice";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Loader } from "../index";
 const Logout = () => {
       const dispatch = useDispatch();
+      const navigate = useNavigate();
+      const [loader, setLoader] = useState(false);
       const handleLogout = () => {
+            setLoader(true);
             appAuth.Logout().then(() => {
                   dispatch(logout());
+                  setLoader(false);
+                  navigate("/");
             });
       };
       return (
-            <button onClick={handleLogout} className="px-3 cursor-pointer py-2 text-sm tracking-tight leading-none bg-red-200 text-red-500 rounded-full">
-                  Logout
+            <button disabled={loader} onClick={handleLogout} className="px-4 flex justify-center items-center cursor-pointer py-2 text-sm tracking-tight leading-none bg-[var(--color-bl)] text-[var(--color-wht)] rounded-full">
+                  {loader ? <Loader /> : "Logout"}
             </button>
       );
 };
