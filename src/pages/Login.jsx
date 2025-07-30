@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import appAuth from "../app/AuthService";
 import { login } from "../store/reducers/authSlice";
 import { useState } from "react";
+import toast from "react-hot-toast";
 const Login = () => {
       const dispatch = useDispatch();
       const navigate = useNavigate();
@@ -26,6 +27,9 @@ const Login = () => {
                               setLoader(false);
                               navigate("/journals");
                         }
+                  } else {
+                        toast.error("Email or password is incorrect");
+                        setLoader(false);
                   }
             } catch (error) {
                   console.log("Unable to Login: ", error.message);
@@ -41,7 +45,7 @@ const Login = () => {
                               <Input {...register("email", { required: true })} label={"Email"} type={"email"} placeholder={"Enter your email"} star={true} />
                               {errors.email && <span className="text-red-500">Email is required</span>}
                               {/* Password */}
-                              <Input {...register("password", { required: true })} label={"Password"} type={"password"} placeholder={"Enter your password"} star={true} />
+                              <Input {...register("password", { required: true })} label={"Password"} type={"password"} placeholder={"Enter your password"} star={true} minLength={8} />
                               {errors.password && <span className="text-red-500">Password is required</span>}
                               <button disabled={loader} type="submit" className={`px-3 col-span-2 flex justify-center items-center py-2 border-[1px] text-[var(--color-wht)] font-medium bg-[var(--color-bl)] rounded-xl  ${loader ? "opacity-60  cursor-none" : "cursor-pointer opacity-100"}`}>
                                     {loader ? <Loader /> : "Login"}
