@@ -4,4 +4,5 @@ import Nav from "./Nav";
 import Post from "./Post";
 import Container from "./container/Container";
 import Input from "./ui/Input";
-export { Footer, Nav, Post, Container, Logout, Input };
+import Loader from "./ui/Loader";
+export { Footer, Nav, Post, Container, Logout, Input, Loader };

@@ -1,9 +1,28 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Login, Signup, Home, Posts, WritePost, ViewPost } from "../pages/index";
 import { Nav, Footer } from "../components/index";
-import { useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
+import appAuth from "../app/AuthService";
+import { useDispatch } from "react-redux";
+import { login } from "../store/reducers/authSlice";
 
 const AppRoute = () => {
+      const dispatch = useDispatch();
+      // const [loading]
+      useEffect(() => {
+            console.log("I am running again due to dispatch at approute");
+            try {
+                  appAuth
+                        .getCurrentUser()
+                        .then((userData) => {
+                              console.log(userData);
+                              dispatch(login(userData));
+                        })
+                        .catch((error) => console.log(error.message));
+            } catch (error) {
+                  console.log(error.message);
+            }
+      }, [dispatch]);
       const { pathname } = useLocation();
       useLayoutEffect(() => {
             window.scrollTo(0, 0);

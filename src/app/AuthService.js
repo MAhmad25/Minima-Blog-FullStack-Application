@@ -7,19 +7,20 @@ export class AuthService {
             this.client.setEndpoint(secret.base_url).setProject(secret.project_id);
             this.account = new Account(this.client);
       }
-      async createAccount(email, password, username) {
+      async createAccount({ email, password, username }) {
             try {
                   await this.account.create(ID.unique(), email, password, username);
-                  return this.Login(email, password);
+                  return this.Login({ email, password });
             } catch (error) {
-                  console.log(error);
+                  console.log(error.message);
             }
       }
-      async Login(email, password) {
+      async Login({ email, password }) {
             try {
-                  return await this.account.createEmailPasswordSession(email, password);
+                  await this.account.createEmailPasswordSession(email, password);
+                  return true;
             } catch (error) {
-                  console.log(error);
+                  console.log(error.message);
             }
       }
       async Logout() {
@@ -32,9 +33,10 @@ export class AuthService {
       async getCurrentUser() {
             try {
                   const user = await this.account.get();
-                  if (user) return true;
+                  if (user) return user;
+                  else return false;
             } catch (err) {
-                  console.log("User is not Logged in ", err);
+                  console.log("User is not Logged in ", err.message);
                   return false;
             }
       }
