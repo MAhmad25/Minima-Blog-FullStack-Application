@@ -1,8 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { Post } from "../components/index";
+// import { useEffect } from "react";
+// import documentService from "../app/DocService";
 
 const ViewPost = () => {
+      const { id } = useParams();
+      console.log("View Post ID: ", id);
+      // ! Its working perfectly fine it is returning the object
+      // const getPostData = async () => {
+      //       const post = await documentService.getSinglePost("688cc8a0003463fa90aa");
+      //       console.log(post);
+      // };
+      // useEffect(() => {
+      //       getPostData();
+      // }, [id]);
+
       return (
             <section className="w-full px-5 font-primary-text min-h-svh text-[var(--color-bl)] bg-[var(--color-wht)]">
                   {/* Top Section */}

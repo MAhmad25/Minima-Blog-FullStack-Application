@@ -2,9 +2,9 @@ import { PiDiamondFill } from "react-icons/pi";
 import { GoArrowUpRight } from "react-icons/go";
 import { Link } from "react-router-dom";
 
-const Post = () => {
+const Post = ({ postData }) => {
       return (
-            <Link to={"/journals/:id"}>
+            <Link to={`/journals/12`}>
                   <div className="cursor-pointer h-fit  space-y-4 shrink-0 text-[var(--color-bl)] px-2 py-5">
                         {/* Featured Image */}
                         <div className="w-full h-1/2 overflow-hidden rounded bg-zinc-300">

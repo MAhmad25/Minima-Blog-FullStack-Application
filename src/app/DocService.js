@@ -9,7 +9,7 @@ export class DocumentService {
             this.databases = new Databases(this.client);
             this.storage = new Storage(this.client);
       }
-      // ?Document Operations
+      // ! Document Operations
       async createPost({ title, slug, content, tages, coverImage }) {
             try {
                   return await this.databases.createDocument(secret.db_id, secret.article_collection_id, ID.unique(), {
@@ -41,19 +41,21 @@ export class DocumentService {
       }
       async getSinglePost(id) {
             try {
-                  await this.databases.getDocument(secret.db_id, secret.article_collection_id, id);
+                  const post = await this.databases.getDocument(secret.db_id, secret.article_collection_id, id);
+                  if (post) return post;
+                  else console.log("Ye wali post insert to karo");
             } catch (error) {
                   console.log("Unable to get the post ", error.message, " Post id: ", id);
             }
       }
       async listPosts() {
             try {
-                  await this.databases.listDocuments(secret.db_id, secret.article_collection_id, [Query.equal("status", "active")]);
+                  return await this.databases.listDocuments(secret.db_id, secret.article_collection_id, [Query.equal("status", "active")]);
             } catch (error) {
                   console.log("Unable to get the List of Post ", error.message);
             }
       }
-      // ?Storage Operations
+      // ! Image Storage Operations
       async createFile(file) {
             try {
                   return await this.storage.createFile(secret.image_bucket_id, ID.unique(), file);

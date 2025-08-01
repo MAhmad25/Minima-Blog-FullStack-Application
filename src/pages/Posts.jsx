@@ -1,8 +1,20 @@
 import { Link } from "react-router-dom";
 import { Post, Input } from "../components/index";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+// import documentService from "../app/DocService";
 const Posts = () => {
       const searchPost = useRef(null);
+      //TODO: I can make a hook for all the document Service
+      //TODO: It will accept the method and return the results
+      // TODO: Also I have to give the dependency array and empty for some cases
+      // ! Its working perfectly fine it is returning the object
+      // const showAllPosts = async () => {
+      //       const { documents } = await documentService.listPosts();
+      //       console.log(documents);
+      // };
+      // useEffect(() => {
+      //       showAllPosts();
+      // }, []);
       return (
             <section className="w-full space-y-16 px-5 min-h-screen py-10 font-primary-text  text-[var(--color-bl)] bg-[var(--color-wht)]">
                   <div className=" flex justify-center items-center flex-col gap-10  w-full">
