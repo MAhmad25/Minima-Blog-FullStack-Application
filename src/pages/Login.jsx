@@ -5,32 +5,25 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import appAuth from "../app/AuthService";
 import { login } from "../store/reducers/authSlice";
-import { useState } from "react";
 import toast from "react-hot-toast";
 const Login = () => {
       const dispatch = useDispatch();
       const navigate = useNavigate();
-      const [loader, setLoader] = useState(false);
       const {
             register,
             handleSubmit,
-            formState: { errors },
+            formState: { errors, isSubmitting },
       } = useForm();
       const loginAccount = async (data) => {
             try {
-                  setLoader(true);
                   const isLoggedIn = await appAuth.Login(data);
                   if (isLoggedIn) {
                         const userData = await appAuth.getCurrentUser();
                         if (userData) {
                               dispatch(login(userData));
-                              setLoader(false);
                               navigate("/journals");
                         }
-                  } else {
-                        toast.error("Email or password is incorrect");
-                        setLoader(false);
-                  }
+                  } else toast.error("Email or password is incorrect");
             } catch (error) {
                   console.log("Unable to Login: ", error.message);
             }
@@ -43,12 +36,12 @@ const Login = () => {
                         <form onSubmit={handleSubmit(loginAccount)} className="grid  gap-3 place-content-center w-full h-full mt-5 grid-cols-2">
                               {/* Email */}
                               <Input {...register("email", { required: true })} label={"Email"} type={"email"} placeholder={"Enter your email"} star={true} />
-                              {errors.email && <span className="text-red-500">Email is required</span>}
+                              {errors.email && <span className="text-red-500 text-xs sm:text-sm tracking-tighter leading-none">Email is required</span>}
                               {/* Password */}
-                              <Input {...register("password", { required: true })} label={"Password"} type={"password"} placeholder={"Enter your password"} star={true} minLength={8} />
-                              {errors.password && <span className="text-red-500">Password is required</span>}
-                              <button disabled={loader} type="submit" className={`px-3 col-span-2 flex justify-center items-center py-2 border-[1px] text-[var(--color-wht)] font-medium bg-[var(--color-bl)] rounded-xl  ${loader ? "opacity-60  cursor-none" : "cursor-pointer opacity-100"}`}>
-                                    {loader ? <Loader /> : "Login"}
+                              <Input {...register("password", { required: "Password is required", minLength: { value: 8, message: "Must be 8 characters" } })} label={"Password"} type={"password"} placeholder={"Enter your password"} star={true} />
+                              {errors.password && <span className="text-red-500 text-xs sm:text-sm tracking-tighter leading-none">{errors.password.message}</span>}
+                              <button disabled={isSubmitting} type="submit" className={`px-3 col-span-2 flex justify-center items-center py-2 border-[1px] text-[var(--color-wht)] font-medium bg-[var(--color-bl)] rounded-xl  ${isSubmitting ? "opacity-60  cursor-none" : "cursor-pointer opacity-100"}`}>
+                                    {isSubmitting ? <Loader /> : "Login"}
                               </button>
                         </form>
                         <Link className="mt-10 flex gap-2 items-center justify-center underline" to="/">

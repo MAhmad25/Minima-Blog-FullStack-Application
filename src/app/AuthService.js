@@ -21,6 +21,7 @@ export class AuthService {
                   return true;
             } catch (error) {
                   console.log(error.message);
+                  return false;
             }
       }
       async Logout() {

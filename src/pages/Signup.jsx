@@ -5,26 +5,23 @@ import { useForm } from "react-hook-form";
 import appAuth from "../app/AuthService";
 import { useDispatch } from "react-redux";
 import { login } from "../store/reducers/authSlice";
-import { useState } from "react";
 const Signup = () => {
       const dispatch = useDispatch();
       const navigate = useNavigate();
-      const [loader, setLoader] = useState(false);
       const {
             register,
             handleSubmit,
-            formState: { errors },
+            formState: { errors, isSubmitting },
       } = useForm();
       const accountCreation = async (data) => {
             console.log("Signup Data: ", data);
             try {
-                  setLoader(true);
                   let userData = await appAuth.createAccount(data);
                   if (userData) {
                         let currentUser = await appAuth.getCurrentUser();
+                        console.log("Just checking", currentUser);
                         if (currentUser) {
                               dispatch(login(currentUser));
-                              setLoader(false);
                               navigate("/journals");
                         }
                   }
@@ -39,16 +36,16 @@ const Signup = () => {
                         <p className="whitespace-nowrap text-center">Enter your information to get started</p>
                         <form onSubmit={handleSubmit(accountCreation)} className="grid  gap-3 place-content-center w-full h-full mt-5 grid-cols-2">
                               {/* Username */}
-                              <Input {...register("username", { required: true })} label={"Username"} type={"text"} placeholder={"Enter your name"} star={true} />
-                              {errors.username && <span className="text-red-500">Username is required</span>}
+                              <Input {...register("username", { required: "Username is required", minLength: { value: 2, message: "Atleast 2 characters" } })} label={"Username"} type={"text"} placeholder={"Enter your name"} star={true} />
+                              {errors.username && <span className="text-red-500 text-xs sm:text-sm tracking-tighter leading-none">{errors.username.message}</span>}
                               {/* Email */}
-                              <Input {...register("email", { required: true })} label={"Email"} type={"email"} placeholder={"Enter your email"} star={true} />
-                              {errors.email && <span className="text-red-500">Email is required</span>}
+                              <Input {...register("email", { required: "Email is required" })} label={"Email"} type={"email"} placeholder={"Enter your email"} star={true} />
+                              {errors.email && <span className="text-red-500 text-xs sm:text-sm tracking-tighter leading-none">{errors.email.message}</span>}
                               {/* Password */}
-                              <Input {...register("password", { required: true })} label={"Password"} type={"password"} placeholder={"Enter your password"} star={true} minLength={8} />
-                              {errors.password && <span className="text-red-500">Password is required</span>}
-                              <button disabled={loader} type="submit" className={`px-3 col-span-2 flex justify-center items-center py-2 border-[1px] text-[var(--color-wht)] font-medium bg-[var(--color-bl)]  rounded-xl  ${loader ? "opacity-60  cursor-none" : "cursor-pointer opacity-100"}`}>
-                                    {loader ? <Loader /> : "Create account"}
+                              <Input {...register("password", { required: "Password is required", minLength: { value: 8, message: "Must be 8 characters long" } })} label={"Password"} type={"password"} placeholder={"Enter your password"} star={true} />
+                              {errors.password && <span className="text-red-500 text-xs sm:text-sm tracking-tighter leading-none">{errors.password.message}</span>}
+                              <button disabled={isSubmitting} type="submit" className={`px-3 col-span-2 flex justify-center items-center py-2 border-[1px] text-[var(--color-wht)] font-medium bg-[var(--color-bl)]  rounded-xl  ${isSubmitting ? "opacity-60  cursor-none" : "cursor-pointer opacity-100"}`}>
+                                    {isSubmitting ? <Loader /> : "Create account"}
                               </button>
                         </form>
                         <Link className="mt-10 flex gap-2 items-center justify-center underline" to="/">
