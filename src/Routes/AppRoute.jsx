@@ -12,7 +12,6 @@ const AppRoute = () => {
       //TODO be automatically logged in if session is already set
       const dispatch = useDispatch();
       useEffect(() => {
-            console.log("I am running again due to dispatch at approute");
             try {
                   appAuth
                         .getCurrentUser()
@@ -20,9 +19,9 @@ const AppRoute = () => {
                               if (userData) {
                                     console.log(userData);
                                     dispatch(login(userData));
-                              } else dispatch(logout);
+                              } else dispatch(logout());
                         })
-                        .catch(() => dispatch(logout));
+                        .catch(() => dispatch(logout()));
             } catch (error) {
                   console.log(error.message);
             }

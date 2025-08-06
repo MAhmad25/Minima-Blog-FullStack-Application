@@ -5,4 +5,6 @@ import Post from "./Post";
 import Container from "./container/Container";
 import Input from "./ui/Input";
 import Loader from "./ui/Loader";
-export { Footer, Nav, Post, Container, Logout, Input, Loader };
+import RTELoader from "./ui/RTELoader";
+import RTE from "./RTE";
+export { Footer, Nav, Post, Container, Logout, Input, Loader, RTELoader, RTE };
