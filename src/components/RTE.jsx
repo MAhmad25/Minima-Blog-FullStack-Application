@@ -10,18 +10,12 @@ const RTE = ({ control, label, defaultValues = "" }) => {
             editorRef.current = editor;
             setLoader(false);
       };
-      // const log = (e) => {
-      //       e.preventDefault();
-      //       if (editorRef.current) {
-      //             console.log(editorRef.current.getContent({ format: "html" }));
-      //       }
-      // };
       return (
             <div>
                   {loader && <RTELoader />}
                   {label && <label htmlFor="content"></label>}
                   <Controller
-                        name="Content"
+                        name="content"
                         control={control}
                         render={({ field: { onChange } }) => (
                               <Editor
@@ -36,7 +30,7 @@ const RTE = ({ control, label, defaultValues = "" }) => {
                                           content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px; background-color: #FDF9EF; }",
                                           license_key: "gpl",
                                     }}
-                                    initialValue={defaultValues || "<h1>Start writing your content</h1>"}
+                                    initialValue={defaultValues}
                                     onEditorChange={onChange}
                               />
                         )}

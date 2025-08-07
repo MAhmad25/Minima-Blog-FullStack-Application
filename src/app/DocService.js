@@ -10,7 +10,7 @@ export class DocumentService {
             this.storage = new Storage(this.client);
       }
       // ! Document Operations
-      async createPost({ title, slug, content, tages, coverImage }) {
+      async createPost({ title, slug = "Slug Value generate karnipare gi", content, tages, coverImage, status = "active", readingTime, author }) {
             try {
                   return await this.databases.createDocument(secret.db_id, secret.article_collection_id, ID.unique(), {
                         title,
@@ -18,14 +18,17 @@ export class DocumentService {
                         content,
                         tages,
                         coverImage,
+                        status,
+                        readingTime,
+                        author,
                   });
             } catch (error) {
                   console.log("Unable to make a post ", error.message);
             }
       }
-      async updatePost(id, obj) {
+      async updatePost(id, previousPost) {
             try {
-                  return await this.databases.updateDocument(secret.db_id, secret.article_collection_id, id, { ...obj });
+                  return await this.databases.updateDocument(secret.db_id, secret.article_collection_id, id, { ...previousPost });
             } catch (error) {
                   console.log("Unable to update the post ", error.message, " Post id: ", id);
             }
