@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import { Login, Signup, Home, Posts, WritePost, ViewPost } from "../pages/index";
+import { Login, Signup, Home, Posts, WritePost, ViewPost, EditPost } from "../pages/index";
 import { Nav, Footer } from "../components/index";
 import { useEffect, useLayoutEffect } from "react";
 import appAuth from "../app/AuthService";
@@ -40,6 +40,7 @@ const AppRoute = () => {
                         <Route path="/create-account" element={<Signup />} />
                         <Route path="/journals" element={<Posts />} />
                         <Route path="/journals/:id" element={<ViewPost />} />
+                        <Route path="/u/edit-post/:id" element={<EditPost />} />
                         <Route path="/write-post" element={<WritePost />} />
                   </Routes>
                   <Footer />

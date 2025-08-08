@@ -12,7 +12,7 @@ const WritePost = ({ editPost }) => {
             control,
             formState: { errors },
             getValues,
-      } = useForm({ defaultValues: { title: editPost?.title || "", slug: editPost?.slug || "", content: editPost?.content || "<h1>Start writing your content</h1>", tages: editPost?.tages || [], coverImage: editPost?.coverImage || "", status: editPost?.status || "active", readingTime: editPost?.readingTime || 0 } });
+      } = useForm({ defaultValues: { title: editPost?.title || "", slug: editPost?.slug || "", content: editPost?.content || "<h1>Start writing your content</h1>", tags: editPost?.tags || [], coverImage: editPost?.coverImage || "", status: editPost?.status || "active", readingTime: editPost?.readingTime || Number(1) } });
       const formSubmittingToDb = async (data) => {
             console.log(data);
             if (editPost) {
@@ -63,7 +63,7 @@ const WritePost = ({ editPost }) => {
                                                 <Input {...register("status")} label={"status"} type="text" />
                                           </div>
                                           <div>
-                                                <Input {...register("readingTime", { required: "Reading time is required", min: { value: 1, message: "Min 1 minute time" }, max: { value: 30, message: "Max 30 minutes time" } })} placeholder="reading time" label={"Reading Time"} type="number" />
+                                                <Input {...register("readingTime", { required: "Reading time is required", min: { value: 1, message: "Min 1 minute time" }, max: { value: 30, message: "Max 30 minutes time" } })} placeholder="reading time" label={"Reading Time"} type={"number"} />
                                                 {errors.readingTime && <span className="text-red-500 text-xs sm:text-sm tracking-tighter leading-none">{errors.readingTime.message}</span>}
                                           </div>
                                     </div>

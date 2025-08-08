@@ -1,16 +1,19 @@
 import { Link, useParams } from "react-router-dom";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { Post } from "../components/index";
+import { useState } from "react";
 // import { useEffect } from "react";
 // import documentService from "../app/DocService";
 
 const ViewPost = () => {
       const { id } = useParams();
+      const [postData, setPostData] = useState({});
       console.log("View Post ID: ", id);
       // ! Its working perfectly fine it is returning the object
       // const getPostData = async () => {
-      //       const post = await documentService.getSinglePost("688cc8a0003463fa90aa");
-      //       console.log(post);
+      // const post = await documentService.getSinglePost("688cc8a0003463fa90aa");
+      // console.log(post);
+      // setPostData(post)
       // };
       // useEffect(() => {
       //       getPostData();
@@ -29,6 +32,9 @@ const ViewPost = () => {
                               <h1 className="font-cool  md:w-1/2   font-black text-3xl sm:text-5xl  tracking-tight "> The Art of Minimalist Design in Modern Web Development</h1>
                               <p className="font-ppneue md:w-1/2 text-lg sm:text-2xl ">Exploring how less becomes more in the world of web design and why minimalism continues to dominate digital aesthetics.</p>
                               <h3 className="px-3 py-1  border-[1px] w-fit  rounded-full tracking-tight leading-none">Written by: Ahmad Latif</h3>
+                              <Link className="sm:px-4 p-3 text-sm sm:text-lg sm:py-2 rounded-xl bg-[var(--color-bl)] text-[var(--color-wht)]" to={`/u/edit-post/${id}`}>
+                                    Edit
+                              </Link>
                         </div>
                         <div className="w-1/4 py-10 space-y-5">
                               <p className="text-sm uppercase text-[var(--color-bl)]/60 whitespace-nowrap">
