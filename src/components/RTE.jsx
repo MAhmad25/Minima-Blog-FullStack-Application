@@ -17,7 +17,8 @@ const RTE = ({ control, label, defaultValues = "" }) => {
                   <Controller
                         name="content"
                         control={control}
-                        render={({ field: { onChange } }) => (
+                        defaultValue={defaultValues}
+                        render={({ field: { onChange, value } }) => (
                               <Editor
                                     apiKey={Keys.editorKey}
                                     onInit={(_ignored, editor) => initEditor(editor)}
@@ -30,7 +31,7 @@ const RTE = ({ control, label, defaultValues = "" }) => {
                                           content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px; background-color: #FDF9EF; }",
                                           license_key: "gpl",
                                     }}
-                                    initialValue={defaultValues}
+                                    value={value || defaultValues}
                                     onEditorChange={onChange}
                               />
                         )}

@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { GoPeople } from "react-icons/go";
 import { PiBookOpen } from "react-icons/pi";
-import { Post } from "../components/index.js";
+import { Post, RTELoader } from "../components/index.js";
 import { BsArrowRightShort } from "react-icons/bs";
+import useAllPosts from "../hooks/useAllPosts.jsx";
 const Home = () => {
+      const { posts } = useAllPosts();
       return (
             <section className="w-full min-h-svh px-5 font-primary-text  text-[var(--color-bl)] bg-[var(--color-wht)]  flex flex-col pt-34  gap-14  items-center">
                   <p className="border-[1px] font-alliance w-fit px-3 py-1 text-xs sm:text-sm rounded-full">✨ Welcome to the future of blogging</p>
@@ -55,9 +57,14 @@ const Home = () => {
                         </div>
                         {/* Cards */}
                         <section className="w-full grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                              <Post />
-                              <Post />
-                              <Post />
+                              {posts.length > 0 ? (
+                                    posts?.map((eachPost) => <Post key={eachPost.$id} postData={eachPost} />).slice(0, 3)
+                              ) : (
+                                    <div className="mx-auto">
+                                          <RTELoader />
+                                          <p className="text-center">Fetching all Post</p>
+                                    </div>
+                              )}
                         </section>
                         <div className="w-full flex flex-col justify-center items-center h-fit">
                               <Link className="sm:px-4 justify-center items-center flex gap-2 p-3 text-lg sm:py-2 rounded-xl border-[1px] bg-transparent" to="/journals">

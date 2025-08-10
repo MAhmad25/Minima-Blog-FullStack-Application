@@ -1,24 +1,41 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { Post } from "../components/index";
-import { useState } from "react";
-// import { useEffect } from "react";
-// import documentService from "../app/DocService";
+import { useState, useEffect } from "react";
+import documentService from "../app/DocService";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoadingFalse, setLoadingTrue } from "../store/reducers/loadingSlice";
 
 const ViewPost = () => {
       const { id } = useParams();
+      const navigate = useNavigate();
+      const userData = useSelector((state) => state.auth.userData);
+      const dispatch = useDispatch();
       const [postData, setPostData] = useState({});
-      console.log("View Post ID: ", id);
+      const isAdmin = postData ? (userData ? userData?.$id === postData?.author : false) : false;
       // ! Its working perfectly fine it is returning the object
-      // const getPostData = async () => {
-      // const post = await documentService.getSinglePost("688cc8a0003463fa90aa");
-      // console.log(post);
-      // setPostData(post)
-      // };
-      // useEffect(() => {
-      //       getPostData();
-      // }, [id]);
-
+      const getPostData = async () => {
+            dispatch(setLoadingTrue());
+            const post = await documentService.getSinglePost(id);
+            console.log(post);
+            setPostData(post);
+            dispatch(setLoadingFalse());
+      };
+      useEffect(() => {
+            getPostData();
+      }, [id]);
+      const deletePost = async () => {
+            if (id) {
+                  dispatch(setLoadingTrue());
+                  const isDeleted = await documentService.deletePost(id);
+                  dispatch(setLoadingFalse());
+                  if (isDeleted) {
+                        toast.success("Post Deleted");
+                        navigate("/journals");
+                  } else toast.error("Unable to delete this post");
+            }
+      };
       return (
             <section className="w-full px-5 font-primary-text min-h-svh text-[var(--color-bl)] bg-[var(--color-wht)]">
                   {/* Top Section */}
@@ -29,12 +46,19 @@ const ViewPost = () => {
                                     <IoIosArrowRoundBack size="2rem" /> <p className="text-sm">Back to home</p>
                               </Link>
                               <p className="opacity-70 ">Design</p>
-                              <h1 className="font-cool  md:w-1/2   font-black text-3xl sm:text-5xl  tracking-tight "> The Art of Minimalist Design in Modern Web Development</h1>
+                              <h1 className="font-cool  md:w-1/2   font-black text-3xl sm:text-5xl  tracking-tight ">{postData?.title} </h1>
                               <p className="font-ppneue md:w-1/2 text-lg sm:text-2xl ">Exploring how less becomes more in the world of web design and why minimalism continues to dominate digital aesthetics.</p>
                               <h3 className="px-3 py-1  border-[1px] w-fit  rounded-full tracking-tight leading-none">Written by: Ahmad Latif</h3>
-                              <Link className="sm:px-4 p-3 text-sm sm:text-lg sm:py-2 rounded-xl bg-[var(--color-bl)] text-[var(--color-wht)]" to={`/u/edit-post/${id}`}>
-                                    Edit
-                              </Link>
+                              {isAdmin && (
+                                    <div className="flex gap-5 items-center">
+                                          <Link className="sm:px-4 p-3 text-sm sm:text-lg sm:py-2 rounded-xl bg-[var(--color-bl)] text-[var(--color-wht)]" to={`/u/edit-post/${id}`}>
+                                                Edit
+                                          </Link>
+                                          <button onClick={deletePost} className="sm:px-4 p-3 text-sm sm:text-lg sm:py-2 rounded-xl bg-red-200 text-red-600">
+                                                Delete
+                                          </button>
+                                    </div>
+                              )}
                         </div>
                         <div className="w-1/4 py-10 space-y-5">
                               <p className="text-sm uppercase text-[var(--color-bl)]/60 whitespace-nowrap">

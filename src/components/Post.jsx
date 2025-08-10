@@ -1,24 +1,42 @@
 import { PiDiamondFill } from "react-icons/pi";
 import { GoArrowUpRight } from "react-icons/go";
 import { Link } from "react-router-dom";
-
+import documentService from "../app/DocService";
+import { useEffect, useState } from "react";
+import htmlToText from "../config/CovertHTMLToText";
 const Post = ({ postData }) => {
+      console.log(postData);
+      const [url, setUrl] = useState(undefined);
+      console.log(url);
+      useEffect(() => {
+            if (!postData?.coverImage) return;
+            const file = documentService.getFileView(postData?.coverImage);
+            setUrl(file);
+      }, [postData?.coverImage]);
       return (
-            <Link to={`/journals/12`}>
+            <Link to={`/journals/${postData?.$id}`}>
                   <div className="cursor-pointer h-fit  space-y-4 shrink-0 text-[var(--color-bl)] px-2 py-5">
                         {/* Featured Image */}
                         <div className="w-full h-1/2 overflow-hidden rounded bg-zinc-300">
-                              <img className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1740088531184-14279ff19095?ixlib=rb-4.1.0&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max" alt="Poster" />
+                              {url ? (
+                                    <img
+                                          className="w-full h-full object-cover"
+                                          src={url} // Use the dynamic
+                                          alt="Cover Image"
+                                    />
+                              ) : (
+                                    <div className="w-full h-full flex items-center justify-center text-gray-500">Loading image...</div>
+                              )}
                         </div>
                         {/* Author Name and Date of post */}
                         <div className="w-full flex gap-4 items-center">
-                              <h2 className="leading-none tracking-tight">Ahmad Latif</h2>
+                              <h2 className="leading-none tracking-tight">{postData?.authorName}</h2>
                               <PiDiamondFill />
-                              <h2 className="leading-none tracking-tight">26 July 2025</h2>
+                              <h2 className="leading-none tracking-tight">{postData?.$createdAt?.split("T")[0]}</h2>
                         </div>
                         {/* Heading and  */}
-                        <h1 className="font-cool text-3xl sm:text-2xl hover:underline transition-all font-extrabold">The Art of Minimalist Design in Modern Web Development</h1>
-                        <p className="text-sm font-light">Exploring how less becomes more in the world of web design and why minimalism continues to dominate digital aesthetics....</p>
+                        <h1 className="font-cool text-3xl sm:text-2xl hover:underline transition-all font-extrabold">{postData?.title}</h1>
+                        <p className="text-sm font-light">{htmlToText(postData?.content).slice(0, 150)}....</p>
                         <div className="flex justify-between w-full">
                               {/* Tags */}
                               <div className="flex-wrap flex gap-2">

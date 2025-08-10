@@ -3,6 +3,7 @@ import secret from "../config/Keys";
 export class AuthService {
       client = new Client();
       account;
+      user;
       constructor() {
             this.client.setEndpoint(secret.base_url).setProject(secret.project_id);
             this.account = new Account(this.client);

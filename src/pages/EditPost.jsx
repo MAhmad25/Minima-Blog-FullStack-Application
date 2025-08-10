@@ -1,13 +1,13 @@
 import { useNavigate, useParams } from "react-router-dom";
 import WritePost from "./WritePost";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import documentService from "../app/DocService";
 
 const EditPost = () => {
       const navigate = useNavigate();
       const { id } = useParams();
       const [postObj, setPostObj] = useState({});
-      useEffect(() => {
+      useLayoutEffect(() => {
             if (id) {
                   try {
                         documentService.getSinglePost(id).then((postData) => {

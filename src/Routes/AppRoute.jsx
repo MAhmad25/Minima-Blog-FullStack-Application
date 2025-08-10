@@ -6,6 +6,7 @@ import appAuth from "../app/AuthService";
 import { useDispatch } from "react-redux";
 import { login, logout } from "../store/reducers/authSlice";
 import { Toaster } from "react-hot-toast";
+import { setLoadingFalse, setLoadingTrue } from "../store/reducers/loadingSlice";
 
 const AppRoute = () => {
       // TODO: When user is opened the app it should
@@ -13,17 +14,22 @@ const AppRoute = () => {
       const dispatch = useDispatch();
       useEffect(() => {
             try {
+                  dispatch(setLoadingTrue());
                   appAuth
                         .getCurrentUser()
                         .then((userData) => {
                               if (userData) {
-                                    console.log(userData);
+                                    console.table(userData);
                                     dispatch(login(userData));
                               } else dispatch(logout());
                         })
-                        .catch(() => dispatch(logout()));
+                        .catch(() => dispatch(logout()))
+                        .finally(() => {
+                              dispatch(setLoadingFalse());
+                        });
             } catch (error) {
                   console.log(error.message);
+                  dispatch(setLoadingFalse());
             }
       }, [dispatch]);
       const { pathname } = useLocation();

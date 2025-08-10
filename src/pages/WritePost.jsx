@@ -1,20 +1,47 @@
 import { useNavigate } from "react-router-dom";
 import { Input, RTE } from "../components/index";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import docService from "../app/DocService";
+import { setLoadingFalse, setLoadingTrue } from "../store/reducers/loadingSlice";
+import { useEffect } from "react";
 const WritePost = ({ editPost }) => {
       const navigate = useNavigate();
       const userData = useSelector((state) => state.auth.userData);
+      console.log(userData);
+      const dispatch = useDispatch();
       const {
             register,
             handleSubmit,
             control,
+            reset,
             formState: { errors },
-            getValues,
-      } = useForm({ defaultValues: { title: editPost?.title || "", slug: editPost?.slug || "", content: editPost?.content || "<h1>Start writing your content</h1>", tags: editPost?.tags || [], coverImage: editPost?.coverImage || "", status: editPost?.status || "active", readingTime: editPost?.readingTime || Number(1) } });
+      } = useForm({
+            defaultValues: {
+                  title: "",
+                  slug: "",
+                  content: "",
+                  tags: [],
+                  coverImage: "",
+                  status: "active",
+                  readingTime: 1,
+            },
+      });
+      useEffect(() => {
+            if (editPost) {
+                  reset({
+                        title: editPost.title || "",
+                        slug: editPost.slug || "",
+                        content: editPost.content || "",
+                        tags: editPost.tags || [],
+                        coverImage: editPost.coverImage || "",
+                        status: editPost.status || "active",
+                        readingTime: editPost.readingTime || 1,
+                  });
+            }
+      }, [editPost, reset]);
       const formSubmittingToDb = async (data) => {
-            console.log(data);
+            dispatch(setLoadingTrue());
             if (editPost) {
                   const newFile = data.coverImage[0] && (await docService.createFile(data.coverImage[0]));
                   console.log(newFile);
@@ -22,12 +49,18 @@ const WritePost = ({ editPost }) => {
                         await docService.deleteFile(editPost?.coverImage);
                   }
                   const updatedPost = await docService.updatePost(editPost.$id, { ...data, coverImage: newFile ? newFile.$id : undefined });
-                  if (updatedPost) navigate(`/journals/${updatedPost.$id}`);
+                  if (updatedPost) {
+                        dispatch(setLoadingFalse());
+                        navigate(`/journals/${updatedPost.$id}`);
+                  }
             } else {
                   const newFile = data.coverImage[0] && (await docService.createFile(data.coverImage[0]));
                   if (newFile) {
-                        const newPost = await docService.createPost({ ...data, coverImage: newFile.$id, author: userData.$id });
-                        if (newPost) navigate(`/journals/${newPost.$id}`);
+                        const newPost = await docService.createPost({ ...data, coverImage: newFile.$id, author: userData.$id, authorName: userData.name });
+                        if (newPost) {
+                              dispatch(setLoadingFalse());
+                              navigate(`/journals/${newPost.$id}`);
+                        }
                   }
             }
       };
@@ -41,14 +74,13 @@ const WritePost = ({ editPost }) => {
                                     <div className="flex flex-col items-center gap-2">
                                           <p className="text-muted-foreground">Click to upload or drag and drop</p>
                                           <p className="text-xs text-muted-foreground">SVG, PNG, JPG or GIF (max. 2MB)</p>
-                                          <Input {...register("coverImage", { required: "Image is required" })} id="featured-image" type="file" star={true} className="hidden" accept="image/*" />
+                                          <Input {...register("coverImage", { required: "Image is required  Previous Image will be deleted" })} id="featured-image" type="file" star={true} className="hidden" accept="image/*" />
                                           <button type="button" onClick={() => document.getElementById("featured-image")?.click()}>
                                                 Select Image
                                           </button>
                                     </div>
                               </div>
                               {errors.coverImage && <span className="text-red-500 text-xs sm:text-sm tracking-tighter leading-none">{errors.coverImage.message}</span>}
-
                               {/* user Input */}
                               <section className="w-full flex justify-center flex-col items-center">
                                     <div className="gap-3 w-full h-full mt-5 flex flex-col justify-center-safe items-center-safe">
@@ -56,14 +88,14 @@ const WritePost = ({ editPost }) => {
                                                 <Input {...register("title", { required: "Headline is required", minLength: { value: 10, message: "Atleast 10 characters" } })} label={"Main Headline"} type={"text"} placeholder={"The Art of Doing..."} star={true} />
                                                 {errors.title && <span className="text-red-500 text-xs sm:text-sm tracking-tighter leading-none">{errors.title.message}</span>}
                                           </div>
-                                          <RTE label={"content"} defaultValues={getValues("content")} control={control} />
+                                          <RTE label={"content"} defaultValues={editPost?.content} control={control} />
                                     </div>
                                     <div className="w-full  mt-10 gap-5 flex">
                                           <div>
                                                 <Input {...register("status")} label={"status"} type="text" />
                                           </div>
                                           <div>
-                                                <Input {...register("readingTime", { required: "Reading time is required", min: { value: 1, message: "Min 1 minute time" }, max: { value: 30, message: "Max 30 minutes time" } })} placeholder="reading time" label={"Reading Time"} type={"number"} />
+                                                <Input type="number" {...register("readingTime", { required: "Reading time is required", min: { value: 1, message: "Min 1 minute time" }, max: { value: 30, message: "Max 30 minutes time" }, valueAsNumber: true })} placeholder="reading time" label={"Reading Time"} />
                                                 {errors.readingTime && <span className="text-red-500 text-xs sm:text-sm tracking-tighter leading-none">{errors.readingTime.message}</span>}
                                           </div>
                                     </div>

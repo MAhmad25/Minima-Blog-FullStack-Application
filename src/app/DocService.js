@@ -10,7 +10,7 @@ export class DocumentService {
             this.storage = new Storage(this.client);
       }
       // ! Document Operations
-      async createPost({ title, slug = "Slug Value generate karnipare gi", content, tags, coverImage, status = "active", readingTime, author }) {
+      async createPost({ title, slug = "Slug Value generate karnipare gi", content, tags, coverImage, status = "active", readingTime, author, authorName }) {
             try {
                   return await this.databases.createDocument(secret.db_id, secret.article_collection_id, ID.unique(), {
                         title,
@@ -21,6 +21,7 @@ export class DocumentService {
                         status,
                         readingTime,
                         author,
+                        authorName,
                   });
             } catch (error) {
                   console.log("Unable to make a post ", error.message);
@@ -66,9 +67,9 @@ export class DocumentService {
                   console.log("Unable to upload image ", error.message);
             }
       }
-      getFilePreview(id) {
+      getFileView(id) {
             try {
-                  this.storage.getFilePreview(secret.image_bucket_id, id);
+                  return this.storage.getFileView(secret.image_bucket_id, id);
             } catch (error) {
                   console.log("Unable to Preview File: ", error.message);
             }
