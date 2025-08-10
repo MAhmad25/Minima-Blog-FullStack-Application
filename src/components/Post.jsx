@@ -1,23 +1,17 @@
 import { PiDiamondFill } from "react-icons/pi";
 import { GoArrowUpRight } from "react-icons/go";
 import { Link } from "react-router-dom";
-import documentService from "../app/DocService";
-import { useEffect, useState } from "react";
 import htmlToText from "../config/CovertHTMLToText";
+import useFileView from "../hooks/useFileView";
+import dateConversion from "../utils/dateConversion";
 const Post = ({ postData }) => {
       console.log(postData);
-      const [url, setUrl] = useState(undefined);
-      console.log(url);
-      useEffect(() => {
-            if (!postData?.coverImage) return;
-            const file = documentService.getFileView(postData?.coverImage);
-            setUrl(file);
-      }, [postData?.coverImage]);
+      const { url } = useFileView(postData);
       return (
             <Link to={`/journals/${postData?.$id}`}>
-                  <div className="cursor-pointer h-fit  space-y-4 shrink-0 text-[var(--color-bl)] px-2 py-5">
+                  <div className="cursor-pointer h-fit bg-red-400 space-y-4 shrink-0 text-[var(--color-bl)] px-2 py-5">
                         {/* Featured Image */}
-                        <div className="w-full h-1/2 overflow-hidden rounded bg-zinc-300">
+                        <div className="w-full min-h-1/2 overflow-hidden rounded bg-zinc-300">
                               {url ? (
                                     <img
                                           className="w-full h-full object-cover"
@@ -29,10 +23,10 @@ const Post = ({ postData }) => {
                               )}
                         </div>
                         {/* Author Name and Date of post */}
-                        <div className="w-full flex gap-4 items-center">
+                        <div className="w-full  flex gap-4 items-center">
                               <h2 className="leading-none tracking-tight">{postData?.authorName}</h2>
                               <PiDiamondFill />
-                              <h2 className="leading-none tracking-tight">{postData?.$createdAt?.split("T")[0]}</h2>
+                              <h2 className="leading-none tracking-tight">{dateConversion(postData?.$createdAt)}</h2>
                         </div>
                         {/* Heading and  */}
                         <h1 className="font-cool text-3xl sm:text-2xl hover:underline transition-all font-extrabold">{postData?.title}</h1>

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Post, Input, RTELoader } from "../components/index";
 import useAllPosts from "../hooks/useAllPosts";
 const Posts = () => {
+      document.title = "Minima | Journals";
       const { posts } = useAllPosts();
       return (
             <section className="w-full space-y-16 px-5 min-h-screen py-10 font-primary-text  text-[var(--color-bl)] bg-[var(--color-wht)]">

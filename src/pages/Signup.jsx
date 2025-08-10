@@ -6,6 +6,7 @@ import appAuth from "../app/AuthService";
 import { useDispatch } from "react-redux";
 import { login } from "../store/reducers/authSlice";
 const Signup = () => {
+      document.title = "Minima | Create an account now";
       const dispatch = useDispatch();
       const navigate = useNavigate();
       const {

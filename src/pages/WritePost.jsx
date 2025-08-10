@@ -6,6 +6,7 @@ import docService from "../app/DocService";
 import { setLoadingFalse, setLoadingTrue } from "../store/reducers/loadingSlice";
 import { useEffect } from "react";
 const WritePost = ({ editPost }) => {
+      document.title = "Minima | Write your post";
       const navigate = useNavigate();
       const userData = useSelector((state) => state.auth.userData);
       console.log(userData);

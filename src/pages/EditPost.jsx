@@ -4,6 +4,7 @@ import { useLayoutEffect, useState } from "react";
 import documentService from "../app/DocService";
 
 const EditPost = () => {
+      document.title = "Wanna change something got for it";
       const navigate = useNavigate();
       const { id } = useParams();
       const [postObj, setPostObj] = useState({});

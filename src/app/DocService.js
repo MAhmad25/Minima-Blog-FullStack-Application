@@ -79,7 +79,7 @@ export class DocumentService {
                   await this.storage.deleteFile(secret.image_bucket_id, id);
                   return true;
             } catch (error) {
-                  console.log("Unable to upload image ", error.message);
+                  console.log("Unable to delete image ", error.message);
                   return false;
             }
       }

@@ -7,6 +7,7 @@ import appAuth from "../app/AuthService";
 import { login } from "../store/reducers/authSlice";
 import toast from "react-hot-toast";
 const Login = () => {
+      document.title = "Minima | Please come back";
       const dispatch = useDispatch();
       const navigate = useNavigate();
       const {

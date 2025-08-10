@@ -6,6 +6,7 @@ import { Post, RTELoader } from "../components/index.js";
 import { BsArrowRightShort } from "react-icons/bs";
 import useAllPosts from "../hooks/useAllPosts.jsx";
 const Home = () => {
+      document.title = "Minima | Home";
       const { posts } = useAllPosts();
       return (
             <section className="w-full min-h-svh px-5 font-primary-text  text-[var(--color-bl)] bg-[var(--color-wht)]  flex flex-col pt-34  gap-14  items-center">
@@ -56,7 +57,7 @@ const Home = () => {
                               <p className="text-center text-sm sm:text-lg sm:w-[40%] leading-none">Discover the most compelling articles and insights from our community of writers</p>
                         </div>
                         {/* Cards */}
-                        <section className="w-full grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                        <section className="w-full grid gap-5 grid-cols-1 bg-amber-400 sm:grid-cols-2 lg:grid-cols-3">
                               {posts.length > 0 ? (
                                     posts?.map((eachPost) => <Post key={eachPost.$id} postData={eachPost} />).slice(0, 3)
                               ) : (
