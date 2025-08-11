@@ -5,13 +5,12 @@ import htmlToText from "../config/CovertHTMLToText";
 import useFileView from "../hooks/useFileView";
 import dateConversion from "../utils/dateConversion";
 const Post = ({ postData }) => {
-      console.log(postData);
       const { url } = useFileView(postData);
       return (
             <Link to={`/journals/${postData?.$id}`}>
-                  <div className="cursor-pointer h-fit bg-red-400 space-y-4 shrink-0 text-[var(--color-bl)] px-2 py-5">
+                  <div className="cursor-pointer hover:bg-[var(--color-bl)] transition-all hover:text-[var(--color-wht)]  space-y-4 shrink-0 text-[var(--color-bl)] px-5 py-5">
                         {/* Featured Image */}
-                        <div className="w-full min-h-1/2 overflow-hidden rounded bg-zinc-300">
+                        <div className="w-full min-h-[300px] overflow-hidden rounded grid place-content-center">
                               {url ? (
                                     <img
                                           className="w-full h-full object-cover"

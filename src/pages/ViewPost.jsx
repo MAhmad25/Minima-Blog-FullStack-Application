@@ -22,7 +22,6 @@ const ViewPost = () => {
       const getPostData = async () => {
             dispatch(setLoadingTrue());
             const post = await documentService.getSinglePost(id);
-            console.log(post);
             setPostData(post);
             dispatch(setLoadingFalse());
       };

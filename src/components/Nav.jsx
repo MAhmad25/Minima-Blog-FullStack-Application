@@ -5,7 +5,6 @@ import { Logout } from "./index";
 import { useSelector } from "react-redux";
 const Nav = () => {
       const status = useSelector((state) => state.auth.status);
-      console.log("Store Status: ", status);
       return (
             <nav className="max-w-full sticky top-0 left-0 flex z-20 backdrop-blur-3xl shadow-wht justify-between md:items-center text-[var(--color-bl)]  font-primary-text h-20 md:h-20">
                   {/* Logo Section */}
@@ -25,10 +24,12 @@ const Nav = () => {
                         </section>
                         {/* Button Section */}
                         <section className="flex flex-col md:flex-row mt-10 md:mt-0 md:items-center  px-10  gap-5">
-                              <Link to="/write-post" className="flex w-fit gap-1 text-xl md:text-sm border-[0.3px] px-2 py-2 md:px-3  md:py-2 rounded-xl">
-                                    <LuSquarePen />
-                                    <p className="leading-none tracking-tight">Write Blog</p>
-                              </Link>
+                              {status && (
+                                    <Link to="/write-post" className="flex w-fit gap-1 text-xl md:text-sm border-[0.3px] px-2 py-2 md:px-3  md:py-2 rounded-xl">
+                                          <LuSquarePen />
+                                          <p className="leading-none tracking-tight">Write Blog</p>
+                                    </Link>
+                              )}
                               <div className="flex text-lg  items-center gap-5">
                                     {!status && <Link to="/login">Login</Link>}
                                     {!status && <Link to="/create-account ">Create Account</Link>}

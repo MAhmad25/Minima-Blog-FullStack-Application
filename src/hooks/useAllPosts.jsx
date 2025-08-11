@@ -4,8 +4,8 @@ import documentService from "../app/DocService";
 const useAllPosts = () => {
       const [posts, setPosts] = useState([]);
       const showAllPosts = async () => {
-            const { documents } = await documentService.listPosts();
-            setPosts(documents);
+            const allPosts = await documentService.listPosts();
+            setPosts(allPosts?.documents);
       };
       useEffect(() => {
             showAllPosts();

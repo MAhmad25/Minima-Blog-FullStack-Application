@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { login, logout } from "../store/reducers/authSlice";
 import { Toaster } from "react-hot-toast";
 import { setLoadingFalse, setLoadingTrue } from "../store/reducers/loadingSlice";
+import Protected from "./Protected";
 
 const AppRoute = () => {
       // TODO: When user is opened the app it should
@@ -42,12 +43,54 @@ const AppRoute = () => {
                   <Nav />
                   <Routes>
                         <Route index path="/" element={<Home />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/create-account" element={<Signup />} />
-                        <Route path="/journals" element={<Posts />} />
-                        <Route path="/journals/:id" element={<ViewPost />} />
-                        <Route path="/u/edit-post/:id" element={<EditPost />} />
-                        <Route path="/write-post" element={<WritePost />} />
+                        <Route
+                              path="/login"
+                              element={
+                                    <Protected authentication={false}>
+                                          <Login />
+                                    </Protected>
+                              }
+                        />
+                        <Route
+                              path="/create-account"
+                              element={
+                                    <Protected authentication={false}>
+                                          <Signup />
+                                    </Protected>
+                              }
+                        />
+                        <Route
+                              path="/journals"
+                              element={
+                                    <Protected>
+                                          <Posts />
+                                    </Protected>
+                              }
+                        />
+                        <Route
+                              path="/journals/:id"
+                              element={
+                                    <Protected>
+                                          <ViewPost />
+                                    </Protected>
+                              }
+                        />
+                        <Route
+                              path="/u/edit-post/:id"
+                              element={
+                                    <Protected>
+                                          <EditPost />
+                                    </Protected>
+                              }
+                        />
+                        <Route
+                              path="/write-post"
+                              element={
+                                    <Protected>
+                                          <WritePost />
+                                    </Protected>
+                              }
+                        />
                   </Routes>
                   <Footer />
             </>
