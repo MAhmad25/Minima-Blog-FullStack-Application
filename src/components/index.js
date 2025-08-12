@@ -7,4 +7,5 @@ import Input from "./ui/Input";
 import Loader from "./ui/Loader";
 import RTELoader from "./ui/RTELoader";
 import RTE from "./RTE";
-export { Footer, Nav, Post, Container, Logout, Input, Loader, RTELoader, RTE };
+import ScreenLoader from "./ui/ScreenLoader";
+export { Footer, Nav, Post, Container, Logout, Input, Loader, RTELoader, RTE, ScreenLoader };

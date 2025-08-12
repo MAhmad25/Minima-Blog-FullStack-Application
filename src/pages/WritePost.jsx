@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import docService from "../app/DocService";
 import { setLoadingFalse, setLoadingTrue } from "../store/reducers/loadingSlice";
 import { useEffect } from "react";
+import { setNewPost, updatePost } from "../store/reducers/postsSlice";
 const WritePost = ({ editPost }) => {
       document.title = "Minima | Write your post";
       const navigate = useNavigate();
       const userData = useSelector((state) => state.auth.userData);
-      console.log(userData);
       const dispatch = useDispatch();
       const {
             register,
@@ -35,7 +35,7 @@ const WritePost = ({ editPost }) => {
                         slug: editPost.slug || "",
                         content: editPost.content || "",
                         tags: editPost.tags || [],
-                        coverImage: editPost.coverImage || "",
+                        coverImage: "",
                         status: editPost.status || "active",
                         readingTime: editPost.readingTime || 1,
                   });
@@ -44,13 +44,19 @@ const WritePost = ({ editPost }) => {
       const formSubmittingToDb = async (data) => {
             dispatch(setLoadingTrue());
             if (editPost) {
-                  const newFile = data.coverImage[0] && (await docService.createFile(data.coverImage[0]));
-                  console.log(newFile);
+                  const hasNewImage = data.coverImage && data.coverImage.length > 0 && data.coverImage[0];
+                  const newFile = hasNewImage && (await docService.createFile(data.coverImage[0]));
+                  console.log("Debugging,", hasNewImage);
+                  console.log("data.coverImage:", data.coverImage);
+                  console.log("data.coverImage.length:", data.coverImage.length);
+                  console.log("data.coverImage[0]:", data.coverImage[0]);
+                  console.log("data.coverImage[0] type:", typeof data.coverImage[0]);
                   if (newFile) {
                         await docService.deleteFile(editPost?.coverImage);
                   }
-                  const updatedPost = await docService.updatePost(editPost.$id, { ...data, coverImage: newFile ? newFile.$id : undefined });
+                  const updatedPost = await docService.updatePost(editPost.$id, { ...data, coverImage: newFile ? newFile.$id : editPost?.coverImage });
                   if (updatedPost) {
+                        dispatch(updatePost({ id: editPost.$id, updatedPost }));
                         dispatch(setLoadingFalse());
                         navigate(`/journals/${updatedPost.$id}`);
                   }
@@ -59,6 +65,7 @@ const WritePost = ({ editPost }) => {
                   if (newFile) {
                         const newPost = await docService.createPost({ ...data, coverImage: newFile.$id, author: userData.$id, authorName: userData.name });
                         if (newPost) {
+                              dispatch(setNewPost(newPost));
                               dispatch(setLoadingFalse());
                               navigate(`/journals/${newPost.$id}`);
                         }
@@ -71,12 +78,12 @@ const WritePost = ({ editPost }) => {
                   <form onSubmit={handleSubmit(formSubmittingToDb)} className="space-y-5">
                         <h1 className="font-cool md:text-3xl text-center font-extrabold">Write a Post</h1>
                         <div className="flex space-y-10  justify-center items-center flex-col">
-                              <div className="border-2 mx-auto container border-dashed  border-border rounded-lg p-8 w-1/2 text-center">
+                              <div onClick={() => document.getElementById("featured-image")?.click()} className="border-2  cursor-pointer mx-auto container border-dashed  border-border rounded-lg p-8 w-1/2 text-center">
                                     <div className="flex flex-col items-center gap-2">
                                           <p className="text-muted-foreground">Click to upload or drag and drop</p>
                                           <p className="text-xs text-muted-foreground">SVG, PNG, JPG or GIF (max. 2MB)</p>
-                                          <Input {...register("coverImage", { required: "Image is required  Previous Image will be deleted" })} id="featured-image" type="file" star={true} className="hidden" accept="image/*" />
-                                          <button type="button" onClick={() => document.getElementById("featured-image")?.click()}>
+                                          <Input {...register("coverImage", { required: editPost ? false : "Image is required" })} id="featured-image" type="file" star={true} className="hidden" accept="image/*" />
+                                          <button className="cursor-pointer" type="button">
                                                 Select Image
                                           </button>
                                     </div>
@@ -85,15 +92,19 @@ const WritePost = ({ editPost }) => {
                               {/* user Input */}
                               <section className="w-full flex justify-center flex-col items-center">
                                     <div className="gap-3 w-full h-full mt-5 flex flex-col justify-center-safe items-center-safe">
-                                          <div className="w-[27rem]">
-                                                <Input {...register("title", { required: "Headline is required", minLength: { value: 10, message: "Atleast 10 characters" } })} label={"Main Headline"} type={"text"} placeholder={"The Art of Doing..."} star={true} />
+                                          <div className="w-[27rem] flex flex-col">
+                                                <label htmlFor="headline">
+                                                      Main Headline
+                                                      <span className="text-red-500">*</span>
+                                                </label>
+                                                <textarea className="px-4 w-full py-2 resize-none min-h-12 [field-sizing:content] h-auto border-[0.5px] rounded-xl outline-none" rows={1} {...register("title", { required: "Headline is required", minLength: { value: 10, message: "Atleast 10 characters" } })} label={"Main Headline"} type={"text"} placeholder={"It will attract the reader..."} />
                                                 {errors.title && <span className="text-red-500 text-xs sm:text-sm tracking-tighter leading-none">{errors.title.message}</span>}
                                           </div>
                                           <RTE label={"content"} defaultValues={editPost?.content} control={control} />
                                     </div>
                                     <div className="w-full  mt-10 gap-5 flex">
                                           <div>
-                                                <Input {...register("status")} label={"status"} type="text" />
+                                                <Input {...register("status")} label={"status"} type="text" disabled={true} />
                                           </div>
                                           <div>
                                                 <Input type="number" {...register("readingTime", { required: "Reading time is required", min: { value: 1, message: "Min 1 minute time" }, max: { value: 30, message: "Max 30 minutes time" }, valueAsNumber: true })} placeholder="reading time" label={"Reading Time"} />
@@ -101,7 +112,7 @@ const WritePost = ({ editPost }) => {
                                           </div>
                                     </div>
                               </section>
-                              <button className="px-3  col-span-2 py-2 border-[1px] text-[var(--color-wht)] font-medium bg-[var(--color-bl)] rounded-xl cursor-pointer">Publish Post</button>
+                              <button className="px-3  col-span-2 py-2 border-[1px] text-[var(--color-wht)] font-medium bg-[var(--color-bl)] rounded-xl cursor-pointer">{editPost ? "Edit Post" : "Publish Post"}</button>
                         </div>
                   </form>
             </section>

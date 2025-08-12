@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import documentService from "../app/DocService";
-
+import { useDispatch } from "react-redux";
+import { setPosts } from "../store/reducers/postsSlice";
 const useAllPosts = () => {
-      const [posts, setPosts] = useState([]);
-      const showAllPosts = async () => {
-            const allPosts = await documentService.listPosts();
-            setPosts(allPosts?.documents);
-      };
+      const dispatch = useDispatch();
       useEffect(() => {
-            showAllPosts();
-      }, []);
-      return { posts };
+            (async () => {
+                  const allPosts = await documentService.listPosts();
+                  dispatch(setPosts(allPosts.documents));
+            })();
+      }, [dispatch]);
 };
 
 export default useAllPosts;

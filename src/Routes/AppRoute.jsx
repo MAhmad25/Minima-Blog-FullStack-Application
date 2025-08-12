@@ -1,44 +1,39 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Login, Signup, Home, Posts, WritePost, ViewPost, EditPost } from "../pages/index";
-import { Nav, Footer } from "../components/index";
-import { useEffect, useLayoutEffect } from "react";
+import { Nav, Footer, ScreenLoader } from "../components/index";
+import { useEffect, useState } from "react";
 import appAuth from "../app/AuthService";
 import { useDispatch } from "react-redux";
 import { login, logout } from "../store/reducers/authSlice";
 import { Toaster } from "react-hot-toast";
-import { setLoadingFalse, setLoadingTrue } from "../store/reducers/loadingSlice";
 import Protected from "./Protected";
+import useAllPosts from "../hooks/useAllPosts";
 
 const AppRoute = () => {
-      // TODO: When user is opened the app it should
-      //TODO be automatically logged in if session is already set
       const dispatch = useDispatch();
+      const [isLoading, setLoading] = useState(true);
+      useAllPosts();
       useEffect(() => {
             try {
-                  dispatch(setLoadingTrue());
                   appAuth
                         .getCurrentUser()
                         .then((userData) => {
                               if (userData) {
-                                    console.table(userData);
                                     dispatch(login(userData));
                               } else dispatch(logout());
                         })
                         .catch(() => dispatch(logout()))
                         .finally(() => {
-                              dispatch(setLoadingFalse());
+                              setLoading(false);
                         });
             } catch (error) {
                   console.log(error.message);
-                  dispatch(setLoadingFalse());
+                  setLoading(false);
             }
       }, [dispatch]);
-      const { pathname } = useLocation();
-      useLayoutEffect(() => {
-            window.scrollTo(0, 0);
-      }, [pathname]);
       return (
             <>
+                  {isLoading && <ScreenLoader />}
                   <Toaster />
                   <Nav />
                   <Routes>

@@ -36,10 +36,10 @@ const Login = () => {
                         <p className="whitespace-nowrap text-center">Enter your credentials to access your account</p>
                         <form onSubmit={handleSubmit(loginAccount)} className="grid  gap-3 place-content-center w-full h-full mt-5 grid-cols-2">
                               {/* Email */}
-                              <Input {...register("email", { required: true })} label={"Email"} type={"email"} placeholder={"Enter your email"} star={true} />
+                              <Input {...register("email", { required: true })} label={"Email"} type={"email"} placeholder={"Enter your email"} star={true} disabled={isSubmitting} />
                               {errors.email && <span className="text-red-500 text-xs sm:text-sm tracking-tighter leading-none">Email is required</span>}
                               {/* Password */}
-                              <Input {...register("password", { required: "Password is required", minLength: { value: 8, message: "Must be 8 characters" } })} label={"Password"} type={"password"} placeholder={"Enter your password"} star={true} />
+                              <Input {...register("password", { required: "Password is required", minLength: { value: 8, message: "Must be 8 characters" } })} label={"Password"} type={"password"} placeholder={"Enter your password"} star={true} disabled={isSubmitting} />
                               {errors.password && <span className="text-red-500 text-xs sm:text-sm tracking-tighter leading-none">{errors.password.message}</span>}
                               <button disabled={isSubmitting} type="submit" className={`px-3 col-span-2 flex justify-center items-center py-2 border-[1px] text-[var(--color-wht)] font-medium bg-[var(--color-bl)] rounded-xl  ${isSubmitting ? "opacity-60  cursor-none" : "cursor-pointer opacity-100"}`}>
                                     {isSubmitting ? <Loader /> : "Login"}

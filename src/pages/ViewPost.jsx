@@ -6,6 +6,7 @@ import documentService from "../app/DocService";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoadingFalse, setLoadingTrue } from "../store/reducers/loadingSlice";
+import { deletePost } from "../store/reducers/postsSlice";
 import parse from "html-react-parser";
 import useFileView from "../hooks/useFileView";
 import dateConversion from "../utils/dateConversion";
@@ -28,11 +29,12 @@ const ViewPost = () => {
       useEffect(() => {
             getPostData();
       }, [id]);
-      const deletePost = async () => {
+      const handlePostDeletion = async () => {
             if (id) {
                   dispatch(setLoadingTrue());
                   const isPostDeleted = await documentService.deletePost(id);
                   const isFileDeleted = await documentService.deleteFile(postData?.coverImage);
+                  dispatch(deletePost(id));
                   dispatch(setLoadingFalse());
                   if (isPostDeleted && isFileDeleted) {
                         toast.success("Post Deleted");
@@ -58,7 +60,7 @@ const ViewPost = () => {
                                           <Link className="sm:px-4 p-3 text-sm sm:text-lg sm:py-2 rounded-xl bg-[var(--color-bl)] text-[var(--color-wht)]" to={`/u/edit-post/${id}`}>
                                                 Edit
                                           </Link>
-                                          <button onClick={deletePost} className="sm:px-4 p-3 text-sm sm:text-lg sm:py-2 rounded-xl bg-red-200 text-red-600">
+                                          <button onClick={handlePostDeletion} className="sm:px-4 p-3 text-sm sm:text-lg sm:py-2 rounded-xl bg-red-200 text-red-600">
                                                 Delete
                                           </button>
                                     </div>

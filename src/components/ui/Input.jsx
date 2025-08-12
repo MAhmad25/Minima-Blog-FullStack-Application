@@ -3,7 +3,7 @@ import { forwardRef, useId } from "react";
 const Input = forwardRef(({ label, type = "text", placeholder = "Enter something", star = false, className = "", ...attributes }, ref) => {
       const id = useId();
       return (
-            <div className="col-span-2 ">
+            <div className="col-span-2">
                   {label && (
                         <label htmlFor={id}>
                               {label} {star && <span className="text-red-500">*</span>}

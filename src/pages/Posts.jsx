@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { Post, Input, RTELoader } from "../components/index";
-import useAllPosts from "../hooks/useAllPosts";
+import { useSelector } from "react-redux";
 const Posts = () => {
       document.title = "Minima | Journals";
-      const { posts } = useAllPosts();
+      const allPosts = useSelector((state) => state.posts.posts);
       return (
             <section className="w-full space-y-16 px-5 min-h-screen py-10 font-primary-text  text-[var(--color-bl)] bg-[var(--color-wht)]">
                   <div className=" flex justify-center items-center flex-col gap-10  w-full">
@@ -23,8 +23,8 @@ const Posts = () => {
                   </div>
                   {/* All Posts */}
                   <section className="w-full grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                        {posts.length > 0 ? (
-                              posts?.map((eachPost) => <Post key={eachPost.$id} postData={eachPost} />)
+                        {allPosts?.length > 0 ? (
+                              allPosts?.map((eachPost) => <Post key={eachPost.$id} postData={eachPost} />)
                         ) : (
                               <div className="mx-auto">
                                     <RTELoader />

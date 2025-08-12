@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import WritePost from "./WritePost";
+import { WritePost } from "./index";
 import { useLayoutEffect, useState } from "react";
 import documentService from "../app/DocService";
 
@@ -20,11 +20,7 @@ const EditPost = () => {
                   }
             } else navigate("/");
       }, [id, navigate]);
-      return (
-            <div>
-                  <WritePost editPost={postObj} />
-            </div>
-      );
+      return <WritePost editPost={postObj} />
 };
 
 export default EditPost;

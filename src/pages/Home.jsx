@@ -2,12 +2,13 @@ import { Link } from "react-router-dom";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { GoPeople } from "react-icons/go";
 import { PiBookOpen } from "react-icons/pi";
-import { Post, RTELoader } from "../components/index.js";
+import { Post } from "../components/index.js";
 import { BsArrowRightShort } from "react-icons/bs";
-import useAllPosts from "../hooks/useAllPosts.jsx";
+import { useSelector } from "react-redux";
 const Home = () => {
       document.title = "Minima | Home";
-      const { posts } = useAllPosts();
+      const allPosts = useSelector((state) => state.posts.posts);
+      console.log(allPosts);
       return (
             <section className="w-full min-h-svh px-5 font-primary-text  text-[var(--color-bl)] bg-[var(--color-wht)]  flex flex-col pt-34  gap-14  items-center">
                   <p className="border-[1px] font-alliance w-fit px-3 py-1 text-xs sm:text-sm rounded-full">✨ Welcome to the future of blogging</p>
@@ -57,7 +58,7 @@ const Home = () => {
                               <p className="text-center text-sm sm:text-lg sm:w-[40%] leading-none">Discover the most compelling articles and insights from our community of writers</p>
                         </div>
                         {/* Cards */}
-                        <section className="w-full grid gap-5 grid-cols-1  py-10 sm:grid-cols-2 lg:grid-cols-3">{posts?.length > 0 ? posts?.map((eachPost) => <Post key={eachPost.$id} postData={eachPost} />).slice(0, 3) : <div className=" text-center text-2xl px-10 col-span-full place-self-center ">⭐Want to read these well-written posts? Log in to continue</div>}</section>
+                        <section className="w-full grid gap-5 grid-cols-1  py-10 sm:grid-cols-2 lg:grid-cols-3">{allPosts?.length > 0 ? allPosts?.map((eachPost) => <Post key={eachPost.$id} postData={eachPost} />).slice(0, 3) : <div className=" text-center text-2xl px-10 col-span-full place-self-center ">⭐Want to read these well-written posts? Log in to continue</div>}</section>
                         <div className="w-full flex flex-col justify-center items-center h-fit">
                               <Link className="sm:px-4 justify-center items-center flex gap-2 p-3 text-lg sm:py-2 rounded-xl border-[1px] bg-transparent" to="/journals">
                                     <p>View all stories</p>
