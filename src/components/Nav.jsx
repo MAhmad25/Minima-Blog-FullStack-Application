@@ -17,7 +17,7 @@ const Nav = () => {
                   {/* Link Section */}
                   <HiOutlineMenu size="2rem" className="md:hidden absolute top-[35%] right-10" />
                   {/* Mobile Nav Section TODO : TO be Animated */}
-                  <section className="md:flex  flex-3/6 md:pl-10 lg:pl-50  top-20 left-0 hidden  absolute md:static md:top-0 md:left-0  md:h-fit  w-full h-screen md:justify-between  md:gap-10 md:items-center ">
+                  <section className="md:flex  flex-3/6 md:pl-10 lg:pl-50  top-20 left-0 bg-[var(--color-wht)] md:bg-transparent absolute md:static md:top-0 md:left-0  md:h-fit  w-full h-screen md:justify-between  md:gap-10 md:items-center ">
                         <section className="flex flex-col mt-10 md:mt-0 px-10 md:px-0 md:flex-row text-4xl md:text-lg justify-center md:gap-5 ">
                               <Link to="/">Home</Link>
                               <Link to="/journals">Journals</Link>

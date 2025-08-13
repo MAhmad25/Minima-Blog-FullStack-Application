@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Login, Signup, Home, Posts, WritePost, ViewPost, EditPost } from "../pages/index";
+import { Login, Signup, Home, Posts, WritePost, ViewPost, EditPost, Page404 } from "../pages/index";
 import { Nav, Footer, ScreenLoader } from "../components/index";
 import { useEffect, useState } from "react";
 import appAuth from "../app/AuthService";
@@ -86,6 +86,7 @@ const AppRoute = () => {
                                     </Protected>
                               }
                         />
+                        <Route path="*" element={<Page404 />} />
                   </Routes>
                   <Footer />
             </>
