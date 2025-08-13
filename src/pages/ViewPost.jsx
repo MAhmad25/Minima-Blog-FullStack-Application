@@ -99,7 +99,7 @@ const ViewPost = () => {
                               )}
                         </div>
                         {/* HTML Content goes here */}
-                        <div className="py-16 lg:px-40">{!!postData?.content && parse(postData?.content)}</div>
+                        <div className="py-16 lg:px-40 break-words">{!!postData?.content && parse(postData?.content)}</div>
                         <h1 className="font-black text-5xl sm:text-7xl tracking-tight text-center  font-cool  my-5">Related Posts</h1>
                         <section className="w-full grid gap-5 grid-cols-1 sm:grid-cols-2 ">
                               <Post />

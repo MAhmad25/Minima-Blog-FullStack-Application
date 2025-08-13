@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Page404 = () => {
       return (
-            <section className="min-h-svh fixed top-0 left-0 z-60  w-screen flex items-center justify-center bg-white font-serif py-10">
+            <section className="min-h-screen fixed top-0 left-0 z-60  w-screen flex items-center justify-center bg-white font-serif py-10">
                   <div className="container mx-auto px-4">
                         <div className="max-w-3xl mx-auto text-center">
                               <div

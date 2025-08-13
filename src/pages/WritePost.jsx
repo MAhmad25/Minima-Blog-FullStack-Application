@@ -83,9 +83,9 @@ const WritePost = ({ editPost }) => {
                               </div>
                               {errors.coverImage && <span className="text-red-500 text-xs sm:text-sm tracking-tighter leading-none">{errors.coverImage.message}</span>}
                               {/* user Input */}
-                              <section className="w-full flex justify-center flex-col items-center">
+                              <section className="w-full flex  overflow-hidden justify-center flex-col items-center">
                                     <div className="gap-3 w-full h-full mt-5 px-5 flex flex-col justify-center-safe items-center-safe">
-                                          <div className="w-[27rem] flex flex-col">
+                                          <div className="md:w-[27rem] w-full flex flex-col">
                                                 <label htmlFor="headline">
                                                       Main Headline
                                                       <span className="text-red-500">*</span>

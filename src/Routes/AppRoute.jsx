@@ -8,6 +8,7 @@ import { login, logout } from "../store/reducers/authSlice";
 import { Toaster } from "react-hot-toast";
 import Protected from "./Protected";
 import useAllPosts from "../hooks/useAllPosts";
+import Dock from "../components/Dock";
 
 const AppRoute = () => {
       const dispatch = useDispatch();
@@ -36,6 +37,7 @@ const AppRoute = () => {
                   {isLoading && <ScreenLoader />}
                   <Toaster />
                   <Nav />
+                  <Dock />
                   <Routes>
                         <Route index path="/" element={<Home />} />
                         <Route
