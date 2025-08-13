@@ -51,7 +51,6 @@ const ViewPost = () => {
                               <Link className="w-fit flex items-center justify-center   underline" to="/journals">
                                     <IoIosArrowRoundBack size="2rem" /> <p className="text-sm">All Posts</p>
                               </Link>
-                              <p className="opacity-70 ">Design</p>
                               <h1 className="font-cool  md:w-1/2   font-black text-3xl sm:text-5xl  tracking-tight ">{postData?.title} </h1>
                               <p className="font-ppneue md:w-1/2 text-lg sm:text-2xl ">Exploring how less becomes more in the world of web design and why minimalism continues to dominate digital aesthetics.</p>
                               <h3 className="px-3 py-1  border-[1px] w-fit  rounded-full tracking-tight leading-none">Written by: {postData?.authorName}</h3>
@@ -66,7 +65,7 @@ const ViewPost = () => {
                                     </div>
                               )}
                         </div>
-                        <div className="w-1/4 py-10 space-y-5">
+                        <div className="md:w-1/4 w-full  py-10 space-y-5">
                               <p className="text-sm uppercase text-[var(--color-bl)]/60 whitespace-nowrap">
                                     Date <br />
                                     <span className="text-[var(--color-bl)]">{dateConversion(postData?.$createdAt)}</span>
@@ -76,6 +75,13 @@ const ViewPost = () => {
                                     <br />
                                     <span className="text-[var(--color-bl)] lowercase ">{postData?.readingTime} min read</span>
                               </p>
+                              <div className="flex-wrap  w-full flex gap-2">
+                                    {postData?.tags?.map((value) => (
+                                          <div key={value} className="px-3 py-1 border-[1px] rounded-full tracking-tight leading-none">
+                                                {value}
+                                          </div>
+                                    ))}
+                              </div>
                         </div>
                   </section>
                   {/* Actual Content Section */}

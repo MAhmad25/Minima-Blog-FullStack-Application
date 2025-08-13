@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import appAuth from "../app/AuthService";
 import { useDispatch } from "react-redux";
 import { login } from "../store/reducers/authSlice";
+import documentService from "../app/DocService";
+import { setPosts } from "../store/reducers/postsSlice";
 const Signup = () => {
       document.title = "Minima | Create an account now";
       const dispatch = useDispatch();
@@ -15,19 +17,19 @@ const Signup = () => {
             formState: { errors, isSubmitting },
       } = useForm();
       const accountCreation = async (data) => {
-            console.log("Signup Data: ", data);
             try {
                   let userData = await appAuth.createAccount(data);
                   if (userData) {
-                        let currentUser = await appAuth.getCurrentUser();
-                        console.log("Just checking", currentUser);
-                        if (currentUser) {
+                        const currentUser = await appAuth.getCurrentUser();
+                        const allPosts = await documentService.listPosts();
+                        dispatch(setPosts(allPosts.documents));
+                        if (currentUser && allPosts) {
                               dispatch(login(currentUser));
                               navigate("/journals");
                         }
                   }
             } catch (error) {
-                  console.log("Account Creation Failed: Check out line 29 ", error.message);
+                  console.log("Account Creation Failed: ", error.message);
             }
       };
       return (

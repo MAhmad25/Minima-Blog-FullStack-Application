@@ -4,6 +4,7 @@ import { logout } from "../../store/reducers/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Loader } from "../index";
+import { removePosts } from "../../store/reducers/postsSlice";
 const Logout = () => {
       const dispatch = useDispatch();
       const navigate = useNavigate();
@@ -11,6 +12,7 @@ const Logout = () => {
       const handleLogout = () => {
             setLoader(true);
             appAuth.Logout().then(() => {
+                  dispatch(removePosts());
                   dispatch(logout());
                   setLoader(false);
                   navigate("/");

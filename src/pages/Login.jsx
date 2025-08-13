@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import appAuth from "../app/AuthService";
 import { login } from "../store/reducers/authSlice";
 import toast from "react-hot-toast";
+import documentService from "../app/DocService";
+import { setPosts } from "../store/reducers/postsSlice";
 const Login = () => {
       document.title = "Minima | Please come back";
       const dispatch = useDispatch();
@@ -20,7 +22,9 @@ const Login = () => {
                   const isLoggedIn = await appAuth.Login(data);
                   if (isLoggedIn) {
                         const userData = await appAuth.getCurrentUser();
-                        if (userData) {
+                        const allPosts = await documentService.listPosts();
+                        dispatch(setPosts(allPosts?.documents));
+                        if (userData && allPosts) {
                               dispatch(login(userData));
                               navigate("/journals");
                         }

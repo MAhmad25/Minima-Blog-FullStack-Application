@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import Keys from "../config/Keys";
 import { Controller } from "react-hook-form";
 import { RTELoader } from "./index";
-const RTE = ({ control, label, defaultValues = "" }) => {
+const RTE = ({ name, control, label, defaultValues = "" }) => {
       const editorRef = useRef(null);
       const [loader, setLoader] = useState(true);
       const initEditor = (editor) => {
@@ -15,15 +15,16 @@ const RTE = ({ control, label, defaultValues = "" }) => {
                   {loader && <RTELoader />}
                   {label && <label htmlFor="content"></label>}
                   <Controller
-                        name="content"
+                        name={name}
                         control={control}
                         defaultValue={defaultValues}
+                        rules={{ required: "Please select at least one tag" }}
                         render={({ field: { onChange, value } }) => (
                               <Editor
                                     apiKey={Keys.editorKey}
                                     onInit={(_ignored, editor) => initEditor(editor)}
                                     init={{
-                                          width: "64rem",
+                                          width: "100%",
                                           height: "30rem",
                                           menubar: true,
                                           plugins: ["a11ychecker", "advlist", "advcode", "advtable", "autolink", "checklist", "lists", "link", "image", "charmap", "preview", "anchor", "searchreplace", "visualblocks", "fullscreen", "formatpainter", "insertdatetime", "media", "table", "help", "wordcount", "code", "emoticons", "directionality", "hr", "pagebreak", "nonbreaking", "toc", "textcolor", "colorpicker", "textpattern", "quickbars"],

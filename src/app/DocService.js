@@ -10,7 +10,7 @@ export class DocumentService {
             this.storage = new Storage(this.client);
       }
       // ! Document Operations
-      async createPost({ title, slug = "Slug Value generate karnipare gi", content, tags, coverImage, status = "active", readingTime, author, authorName }) {
+      async createPost({ title, slug = "Slug Value generate karnipare gi", content, tags, coverImage, readingTime, author, authorName }) {
             try {
                   return await this.databases.createDocument(secret.db_id, secret.article_collection_id, ID.unique(), {
                         title,
@@ -18,7 +18,6 @@ export class DocumentService {
                         content,
                         tags,
                         coverImage,
-                        status,
                         readingTime,
                         author,
                         authorName,

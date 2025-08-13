@@ -33,9 +33,11 @@ const Post = ({ postData }) => {
                         <div className="flex justify-between w-full">
                               {/* Tags */}
                               <div className="flex-wrap flex gap-2">
-                                    <div className="px-3 py-1 border-[1px] rounded-full tracking-tight leading-none">Design</div>
-                                    <div className="px-3 py-1 border-[1px] rounded-full tracking-tight leading-none">Technology</div>
-                                    <div className="px-3 py-1 border-[1px] rounded-full tracking-tight leading-none">Development</div>
+                                    {postData?.tags?.map((value) => (
+                                          <div key={value} className="px-3 py-1 border-[1px] rounded-full tracking-tight leading-none">
+                                                {value}
+                                          </div>
+                                    ))}
                               </div>
                               <span>
                                     <GoArrowUpRight size="1.3rem" />
