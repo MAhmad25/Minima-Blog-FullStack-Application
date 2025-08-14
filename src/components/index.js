@@ -9,4 +9,5 @@ import RTELoader from "./ui/RTELoader";
 import RTE from "./RTE";
 import ScreenLoader from "./ui/ScreenLoader";
 import FormTagSelector from "./FormTagSelector";
-export { Footer, Nav, Post, Container, Logout, Input, Loader, RTELoader, RTE, ScreenLoader, FormTagSelector };
+import Dock from "./Dock";
+export { Footer, Nav, Post, Container, Logout, Input, Loader, RTELoader, RTE, ScreenLoader, FormTagSelector, Dock };

@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Login, Signup, Home, Posts, WritePost, ViewPost, EditPost, Page404 } from "../pages/index";
-import { Nav, Footer, ScreenLoader } from "../components/index";
+import { Nav, Footer, ScreenLoader, Dock } from "../components/index";
 import { useEffect, useState } from "react";
 import appAuth from "../app/AuthService";
 import { useDispatch } from "react-redux";
@@ -8,7 +8,6 @@ import { login, logout } from "../store/reducers/authSlice";
 import { Toaster } from "react-hot-toast";
 import Protected from "./Protected";
 import useAllPosts from "../hooks/useAllPosts";
-import Dock from "../components/Dock";
 
 const AppRoute = () => {
       const dispatch = useDispatch();
