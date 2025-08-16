@@ -13,9 +13,9 @@ export class DocumentService {
       async createPost({ title, slug = "Slug Value generate karnipare gi", content, tags, coverImage, readingTime, author, authorName }) {
             try {
                   return await this.databases.createDocument(secret.db_id, secret.article_collection_id, ID.unique(), {
-                        title,
+                        title: title.trim(),
                         slug,
-                        content,
+                        content: content.trim(),
                         tags,
                         coverImage,
                         readingTime,
