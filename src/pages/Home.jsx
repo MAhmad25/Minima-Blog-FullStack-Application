@@ -9,7 +9,7 @@ const Home = () => {
       document.title = "Minima | Home";
       const allPosts = useSelector((state) => state.posts.posts);
       return (
-            <section className="w-full  px-5 font-primary-text  text-[var(--color-bl)] bg-[var(--color-wht)]  flex flex-col pt-34  gap-14  items-center">
+            <section className="w-full  px-5 font-primary-text  text-[var(--color-bl)]   flex flex-col pt-34  gap-14  items-center">
                   <p className="border-[1px] font-alliance w-fit px-3 py-1 text-xs sm:text-sm rounded-full">✨ Welcome to the future of blogging</p>
                   <h1 className="font-cool text-center sm:w-1/2   font-black text-5xl sm:text-7xl tracking-tight ">Thoughts, stories and ideas.</h1>
                   <p className="font-ppneue  text-center sm:w-1/2 text-xl sm:text-2xl ">A minimalist blog platform for the modern web, where ideas meet elegant design and creativity knows no bounds.</p>

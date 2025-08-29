@@ -4,7 +4,15 @@ import { useSelector } from "react-redux";
 const Nav = () => {
       const status = useSelector((state) => state.auth.status);
       return (
-            <nav className="max-w-[95%] rounded-full container mx-auto sticky top-0 left-0 flex z-20  bg-[var(--color-wht)] shadow-bl shadow-2xs justify-between md:items-center text-[var(--color-bl)]  font-primary-text h-16 ">
+            <nav
+                  style={{
+                        backgroundImage: `
+        radial-gradient(circle at 20% 80%, rgba(255, 220, 190, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 245, 238, 0.35) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255, 210, 180, 0.15) 0%, transparent 50%)`,
+                  }}
+                  className="max-w-[95%] rounded-full container mx-auto sticky top-0 left-0 flex z-20  backdrop-blur-2xl shadow-bl shadow-2xs justify-between md:items-center text-[var(--color-bl)]  font-primary-text h-16 "
+            >
                   {/* Logo Section */}
                   <section className="flex w-fit  md:w-1/4  items-center">
                         <svg className="scale-[0.4]" width="90" height="90" viewBox="0 0 106 108" fill="none" xmlns="http://www.w3.org/2000/svg">
