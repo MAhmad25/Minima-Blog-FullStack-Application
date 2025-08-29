@@ -8,13 +8,13 @@ const Post = ({ postData }) => {
       const { url } = useFileView(postData);
       return (
             <Link to={`/journals/${postData?.$id}`}>
-                  <div className="cursor-pointer hover:bg-[var(--color-bl)] transition-all hover:text-[var(--color-wht)]  space-y-4 shrink-0 text-[var(--color-bl)] px-5 py-5">
+                  <div className="cursor-pointer  space-y-4 shrink-0 text-[var(--color-bl)] px-5 py-5">
                         {/* Featured Image */}
                         <div className="w-full min-h-[300px] overflow-hidden rounded grid place-content-center">
                               {url ? (
                                     <img
                                           className="w-full h-full object-cover"
-                                          src={url} // Use the dynamic
+                                          src={url} 
                                           alt="Cover Image"
                                     />
                               ) : (
