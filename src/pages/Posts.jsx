@@ -29,14 +29,14 @@ const Posts = () => {
                   </div>
 
                   {/* Tags and Search */}
-                  <div className="w-full flex flex-col sm:flex-row gap-5 sm:gap-0 justify-between">
-                        <div className="flex h-fit gap-3 flex-wrap w-3/4">
+                  <div className="w-full flex flex-col sm:flex-row gap-5 sm:gap-0 justify-end">
+                        {/* <div className="flex h-fit gap-3 flex-wrap w-3/4">
                               {["All", "Design", "Technology", "Creativity", "Business", "Accessibility"].map((tag, index) => (
                                     <Link to={`/category/${tag}`} key={index} className="px-3 py-1 border-[1px] text-lg rounded-full tracking-tight leading-none hover:bg-gray-100 transition-colors">
                                           {tag}
                                     </Link>
                               ))}
-                        </div>
+                        </div> */}
 
                         <div className="relative">
                               <input className="px-4 py-2 block border-b-2 rounded outline-none focus:border-[var(--color-bl)] transition-colors" type="text" placeholder="Search posts..." value={searchTerm} onChange={handleSearchChange} />
