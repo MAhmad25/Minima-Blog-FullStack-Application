@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-
 const Footer = () => {
       return (
             <footer className="w-full py-10 px-10 h-fit">
