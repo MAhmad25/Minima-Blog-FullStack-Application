@@ -1,3 +1,4 @@
+import useScrollTop from "../hooks/useScrollTop";
 import Page404 from "./404Page";
 import EditPost from "./EditPost";
 import Home from "./Home";
@@ -6,4 +7,4 @@ import Posts from "./Posts";
 import Signup from "./Signup";
 import ViewPost from "./ViewPost";
 import WritePost from "./WritePost";
-export { Home, Login, Posts, Signup, ViewPost, WritePost, EditPost, Page404 };
+export { Home, Login, Posts, Signup, ViewPost, WritePost, EditPost, Page404, useScrollTop };

@@ -10,8 +10,10 @@ import { deletePost } from "../store/reducers/postsSlice";
 import parse from "html-react-parser";
 import useFileView from "../hooks/useFileView";
 import dateConversion from "../utils/dateConversion";
+import { useScrollTop } from "./index.js";
 
 const ViewPost = () => {
+      useScrollTop();
       const [postData, setPostData] = useState({});
       document.title = postData?.title || "Fetching Post...";
       const { id } = useParams();

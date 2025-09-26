@@ -8,8 +8,11 @@ import { login } from "../store/reducers/authSlice";
 import toast from "react-hot-toast";
 import documentService from "../app/DocService";
 import { setPosts } from "../store/reducers/postsSlice";
+import { useScrollTop } from "./index.js";
+
 const Login = () => {
       document.title = "Minima | Please come back";
+      useScrollTop();
       const dispatch = useDispatch();
       const navigate = useNavigate();
       const {

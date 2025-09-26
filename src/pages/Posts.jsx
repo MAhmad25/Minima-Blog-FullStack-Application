@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import { Post, RTELoader } from "../components/index";
 import { useSelector } from "react-redux";
 import { useState, useMemo } from "react";
+import { useScrollTop } from "./index.js";
 
 const Posts = () => {
+      useScrollTop();
       document.title = "Minima | Journals";
       const allPosts = useSelector((state) => state.posts.posts);
       const [searchTerm, setSearchTerm] = useState("");

@@ -6,7 +6,10 @@ import docService from "../app/DocService";
 import { setLoadingFalse, setLoadingTrue } from "../store/reducers/loadingSlice";
 import { useEffect } from "react";
 import { setNewPost, updatePost } from "../store/reducers/postsSlice";
+import { useScrollTop } from "./index.js";
+
 const WritePost = ({ editPost }) => {
+      useScrollTop();
       document.title = "Minima | Write your post";
       const navigate = useNavigate();
       const userData = useSelector((state) => state.auth.userData);

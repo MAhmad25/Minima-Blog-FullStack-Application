@@ -3,10 +3,12 @@ import { FaArrowTrendUp } from "react-icons/fa6";
 import { GoPeople } from "react-icons/go";
 import { PiBookOpen } from "react-icons/pi";
 import { Post } from "../components/index.js";
+import { useScrollTop } from "./index.js";
 import { BsArrowRightShort } from "react-icons/bs";
 import { useSelector } from "react-redux";
 const Home = () => {
       document.title = "Minima | Home";
+      useScrollTop();
       const allPosts = useSelector((state) => state.posts.posts);
       return (
             <section className="w-full  px-5 font-primary-text  text-[var(--color-bl)]   flex flex-col pt-34  gap-14  items-center">

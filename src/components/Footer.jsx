@@ -17,10 +17,6 @@ const Footer = () => {
                                     ],
                               },
                               {
-                                    name: "Categories",
-                                    links: [{ text: "Design" }, { text: "Tech" }],
-                              },
-                              {
                                     name: "Legal",
                                     text: ["Privacy Policy", "Terms of Service", "Cookie Policy"],
                               },

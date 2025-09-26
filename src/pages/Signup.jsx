@@ -7,7 +7,10 @@ import { useDispatch } from "react-redux";
 import { login } from "../store/reducers/authSlice";
 import documentService from "../app/DocService";
 import { setPosts } from "../store/reducers/postsSlice";
+import { useScrollTop } from "./index.js";
+
 const Signup = () => {
+      useScrollTop();
       document.title = "Minima | Create an account now";
       const dispatch = useDispatch();
       const navigate = useNavigate();
