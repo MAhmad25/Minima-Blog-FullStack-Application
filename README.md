@@ -1,5 +1,3 @@
-src/
-
 # 📝 Minima Blog
 
 A modern, minimalist fullstack blog platform built with **React**, **Vite**, **TailwindCSS**, **Redux**, and **Appwrite** as the backend server. Effortlessly create, edit, and share beautiful posts with a clean, distraction-free interface.
