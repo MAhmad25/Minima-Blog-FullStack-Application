@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { Post } from "../components/index";
+// import { Post } from "../components/index";
 import { useState, useEffect } from "react";
 import documentService from "../app/DocService";
 import toast from "react-hot-toast";
@@ -15,7 +15,7 @@ import { useScrollTop } from "./index.js";
 const ViewPost = () => {
       useScrollTop();
       const [postData, setPostData] = useState({});
-      document.title = postData?.title || "Fetching Post...";
+      document.title = "Article | " + postData?.title || "Fetching Post...";
       const { id } = useParams();
       const navigate = useNavigate();
       const userData = useSelector((state) => state.auth.userData);
@@ -61,7 +61,7 @@ const ViewPost = () => {
                                           <Link className="sm:px-4 p-3 text-sm sm:text-lg sm:py-2 rounded-xl bg-[var(--color-bl)] text-[var(--color-wht)]" to={`/u/edit-post/${id}`}>
                                                 Edit
                                           </Link>
-                                          <button onClick={handlePostDeletion} className="sm:px-4 p-3 text-sm sm:text-lg sm:py-2 rounded-xl bg-red-200 text-red-600">
+                                          <button onClick={handlePostDeletion} className="sm:px-4 cursor-pointer p-3 text-sm sm:text-lg sm:py-2 rounded-xl bg-red-200 text-red-600">
                                                 Delete
                                           </button>
                                     </div>

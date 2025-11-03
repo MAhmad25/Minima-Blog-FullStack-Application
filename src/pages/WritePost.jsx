@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import docService from "../app/DocService";
 import { setLoadingFalse, setLoadingTrue } from "../store/reducers/loadingSlice";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { setNewPost, updatePost } from "../store/reducers/postsSlice";
 import { useScrollTop } from "./index.js";
 
@@ -14,6 +14,9 @@ const WritePost = ({ editPost }) => {
       const navigate = useNavigate();
       const userData = useSelector((state) => state.auth.userData);
       const dispatch = useDispatch();
+      // preview URL for selected image (object URL or existing URL)
+      const [preview, setPreview] = useState(null);
+      const prevUrlRef = useRef(null);
       const {
             register,
             handleSubmit,
@@ -30,6 +33,9 @@ const WritePost = ({ editPost }) => {
                   readingTime: 1,
             },
       });
+
+      // if editing and editPost.coverImage is already a URL, show it.
+      // If your coverImage is not a URL but an id, replace this with a fetch to get the file URL.
       useEffect(() => {
             if (editPost) {
                   reset({
@@ -37,14 +43,51 @@ const WritePost = ({ editPost }) => {
                         slug: editPost.slug || "",
                         content: editPost.content || "",
                         tags: editPost.tags || [],
-                        coverImage: "",
+                        coverImage: editPost?.coverImage || "",
                         readingTime: editPost.readingTime || 1,
                   });
+                  if (editPost?.coverImage) {
+                        setPreview(docService.getFileView(editPost?.coverImage));
+                  }
             }
       }, [editPost, reset]);
+
+      const coverImageRegister = register("coverImage", { required: editPost ? false : "Image is required" });
+
+      const handleFileChange = (e) => {
+            // Call react-hook-form's onChange so form still registers the file
+            coverImageRegister.onChange(e);
+            const file = e.target.files?.[0];
+            if (file) {
+                  // revoke previously created object URL
+                  if (prevUrlRef.current && prevUrlRef.current.startsWith("blob:")) {
+                        URL.revokeObjectURL(prevUrlRef.current);
+                  }
+                  const url = URL.createObjectURL(file);
+                  prevUrlRef.current = url;
+                  setPreview(url);
+            } else {
+                  // no file selected -> clear preview
+                  if (prevUrlRef.current && prevUrlRef.current.startsWith("blob:")) {
+                        URL.revokeObjectURL(prevUrlRef.current);
+                  }
+                  prevUrlRef.current = null;
+                  setPreview(null);
+            }
+      };
+
+      useEffect(() => {
+            return () => {
+                  if (prevUrlRef.current && prevUrlRef.current.startsWith("blob:")) {
+                        URL.revokeObjectURL(prevUrlRef.current);
+                  }
+            };
+      }, []);
+
       const formSubmittingToDb = async (data) => {
             dispatch(setLoadingTrue());
             if (editPost) {
+                  console.log(editPost);
                   const hasNewImage = data.coverImage && data.coverImage.length > 0 && data.coverImage[0];
                   const newFile = hasNewImage && (await docService.createFile(data.coverImage[0]));
                   if (newFile) {
@@ -76,9 +119,16 @@ const WritePost = ({ editPost }) => {
                         <div className="flex space-y-10  justify-center items-center flex-col">
                               <div onClick={() => document.getElementById("featured-image")?.click()} className="border-2  cursor-pointer mx-auto container border-dashed  border-border rounded-lg p-8 w-1/2 text-center">
                                     <div className="flex flex-col items-center gap-2">
-                                          <p className="text-muted-foreground">Click to upload or drag and drop</p>
-                                          <p className="text-xs text-muted-foreground">SVG, PNG, JPG or GIF (max. 2MB)</p>
-                                          <Input {...register("coverImage", { required: editPost ? false : "Image is required" })} id="featured-image" type="file" star={true} className="hidden" accept="image/*" />
+                                          {preview ? (
+                                                <img src={preview} alt="Featured preview" className="max-h-48 w-full object-cover rounded" />
+                                          ) : (
+                                                <>
+                                                      <p className="text-muted-foreground">Click to upload or drag and drop</p>
+                                                      <p className="text-xs text-muted-foreground">SVG, PNG, JPG or GIF (max. 2MB)</p>
+                                                </>
+                                          )}
+                                          {/* keep the input hidden; we attach our custom change handler while preserving RHF registration */}
+                                          <Input {...coverImageRegister} id="featured-image" type="file" star={true} className="hidden" accept="image/*" onChange={handleFileChange} />
                                           <button className="cursor-pointer" type="button">
                                                 Select Image
                                           </button>

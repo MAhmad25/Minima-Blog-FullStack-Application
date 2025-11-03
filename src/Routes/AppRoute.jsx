@@ -12,13 +12,14 @@ import useAllPosts from "../hooks/useAllPosts";
 const AppRoute = () => {
       const dispatch = useDispatch();
       const [isLoading, setLoading] = useState(true);
-      useAllPosts();
+      useAllPosts(); //It will set the all Posts in the app state called allPosts
       useEffect(() => {
             try {
                   appAuth
                         .getCurrentUser()
                         .then((userData) => {
                               if (userData) {
+                                    // Here the userData will come check if user email is verified
                                     dispatch(login(userData));
                               } else dispatch(logout());
                         })
@@ -36,7 +37,7 @@ const AppRoute = () => {
                   {isLoading && <ScreenLoader />}
                   <Toaster />
                   <Nav />
-                  <Dock />
+                  {!isLoading && <Dock />}
                   <Routes>
                         <Route index path="/" element={<Home />} />
                         <Route
