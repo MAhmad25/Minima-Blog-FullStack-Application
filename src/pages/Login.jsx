@@ -25,13 +25,18 @@ const Login = () => {
                   const isLoggedIn = await appAuth.Login(data);
                   if (isLoggedIn) {
                         const userData = await appAuth.getCurrentUser();
+                        if (!userData.emailVerification) {
+                              toast.error("Your email is not verfied yet !");
+                              await appAuth.Logout();
+                              return;
+                        }
                         const allPosts = await documentService.listPosts();
                         dispatch(setPosts(allPosts?.documents));
                         if (userData && allPosts) {
                               dispatch(login(userData));
                               navigate("/journals");
                         }
-                  } else toast.error("Email or password is incorrect");
+                  }
             } catch (error) {
                   console.log("Unable to Login: ", error.message);
             }

@@ -8,12 +8,18 @@ export class AuthService {
             this.client.setEndpoint(secret.base_url).setProject(secret.project_id);
             this.account = new Account(this.client);
       }
+      async verifyEmail(userId, secret) {
+            return await this.account.updateVerification(userId, secret);
+      }
       async createAccount({ email, password, username }) {
             try {
                   await this.account.create(ID.unique(), email, password, username);
-                  return this.Login({ email, password });
+                  await this.account.createEmailPasswordSession(email, password);
+                  await this.account.createVerification("http://localhost:5173");
+                  return true;
             } catch (error) {
                   console.log(error.message);
+                  return false;
             }
       }
       async Login({ email, password }) {

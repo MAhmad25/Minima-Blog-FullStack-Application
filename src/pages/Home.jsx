@@ -61,7 +61,7 @@ const Home = () => {
                                     <p className="text-center text-sm sm:text-lg sm:w-[40%] leading-none">Discover the most compelling articles and insights from our community of writers</p>
                               </div>
                               {/* Cards */}
-                              <section className="w-full grid gap-5 grid-cols-1  py-10 sm:grid-cols-2 lg:grid-cols-3">{allPosts?.length > 0 ? allPosts?.map((eachPost) => <Post key={eachPost.$id} postData={eachPost} />).slice(0, 3) : <div className=" text-center text-2xl px-10 col-span-full place-self-center ">No Post Available! Be the first One to write a Post</div>}</section>
+                              <section className="w-full grid gap-5 grid-cols-1  py-10 sm:grid-cols-2 lg:grid-cols-3">{allPosts?.length > 0 && userData?.emailVerification ? allPosts?.map((eachPost) => <Post key={eachPost.$id} postData={eachPost} />).slice(0, 3) : <div className=" text-center text-2xl px-10 col-span-full place-self-center ">No Post Available! Be the first One to write a Post</div>}</section>
                               <div className="w-full flex flex-col justify-center items-center h-fit">
                                     <Link className="sm:px-4 justify-center items-center flex gap-2 p-3 text-lg sm:py-2 rounded-xl border-[1px] bg-transparent" to="/journals">
                                           <p>View all stories</p>

@@ -1,37 +1,55 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useSearchParams } from "react-router-dom";
 import { Login, Signup, Home, Posts, WritePost, ViewPost, EditPost, Page404 } from "../pages/index";
 import { Nav, Footer, ScreenLoader, Dock } from "../components/index";
 import { useEffect, useState } from "react";
 import appAuth from "../app/AuthService";
 import { useDispatch } from "react-redux";
 import { login, logout } from "../store/reducers/authSlice";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import Protected from "./Protected";
 import useAllPosts from "../hooks/useAllPosts";
 
 const AppRoute = () => {
       const dispatch = useDispatch();
       const [isLoading, setLoading] = useState(true);
-      useAllPosts(); //It will set the all Posts in the app state called allPosts
+      const [searchParams] = useSearchParams();
+      const userid = searchParams.get("userId");
+      const secret = searchParams.get("secret");
       useEffect(() => {
-            try {
-                  appAuth
-                        .getCurrentUser()
-                        .then((userData) => {
-                              if (userData) {
-                                    // Here the userData will come check if user email is verified
-                                    dispatch(login(userData));
-                              } else dispatch(logout());
-                        })
-                        .catch(() => dispatch(logout()))
-                        .finally(() => {
+            setLoading(true);
+            (async () => {
+                  if (userid && secret) {
+                        try {
+                              const isVerified = await appAuth.verifyEmail(userid, secret);
+                              if (isVerified) {
+                                    toast.success("Email Successfully Verifed !");
+                                    window.history.replaceState({}, document.title, "/");
+                              }
+                        } catch (error) {
+                              toast.error("Something went wrong on our side !");
+                              console.log(error.message);
+                              return;
+                        }
+                  }
+                  // If params does not exists
+                  try {
+                        const userData = await appAuth.getCurrentUser();
+                        if (userData && userData.emailVerification) {
+                              // Here the userData will come check if user email is verified
+                              dispatch(login(userData));
                               setLoading(false);
-                        });
-            } catch (error) {
-                  console.log(error.message);
-                  setLoading(false);
-            }
-      }, [dispatch]);
+                        } else {
+                              dispatch(logout());
+                              setLoading(false);
+                        }
+                  } catch (err) {
+                        console.log(err.message);
+                        setLoading(false);
+                        dispatch(logout());
+                  }
+            })();
+      }, [dispatch, secret, userid]);
+      useAllPosts();
       return (
             <>
                   {isLoading && <ScreenLoader />}
