@@ -15,7 +15,7 @@ export class AuthService {
             try {
                   await this.account.create(ID.unique(), email, password, username);
                   await this.account.createEmailPasswordSession(email, password);
-                  await this.account.createVerification("http://localhost:5173");
+                  await this.account.createVerification("https://minima-ashy.vercel.app");
                   return true;
             } catch (error) {
                   console.log(error.message);
